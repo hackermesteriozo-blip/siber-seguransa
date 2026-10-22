@@ -1,0 +1,413 @@
+ <escape><!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080d16">
+  <title>ANON CYBERSEC PRO | Security Dashboard</title>
+  <meta name="description" content="Painel de auditoria defensiva e monitoramento de cibersegurança.">
+  <style>
+    :root {
+      --bg: #080d16;
+      --panel: #101827;
+      --panel2: #0c1421;
+      --border: #223149;
+      --text: #e7eef9;
+      --muted: #92a2b9;
+      --cyan: #36d9ff;
+      --green: #47e6a1;
+      --red: #ff647c;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, system-ui, Arial, sans-serif;
+    }
+    button, input, select { font: inherit; }
+    button { cursor: pointer; }
+
+    .layout { min-height: 100vh; display: flex; }
+    aside {
+      width: 245px;
+      flex-shrink: 0;
+      background: #0b111d;
+      border-right: 1px solid var(--border);
+      padding: 24px 15px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 0 8px 27px;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: .5px;
+    }
+    .logo {
+      width: 39px; height: 39px;
+      display: grid; place-items: center;
+      border-radius: 12px;
+      color: var(--cyan);
+      background: #102a3a;
+      border: 1px solid #24546c;
+      font-size: 22px;
+    }
+    .eyebrow {
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 1.8px;
+      margin: 18px 10px 9px;
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      width: 100%;
+      border: 1px solid transparent;
+      color: #aab9cc;
+      background: transparent;
+      text-align: left;
+      padding: 12px;
+      border-radius: 9px;
+      margin: 3px 0;
+    }
+    .nav:hover, .nav.active {
+      color: var(--cyan);
+      background: #112234;
+      border-color: #1e3a50;
+    }
+    main { flex: 1; min-width: 0; }
+    header {
+      min-height: 72px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 15px 28px;
+    }
+    .status { color: var(--green); font-size: 12px; }
+    .status::before {
+      content: "";
+      display: inline-block;
+      width: 7px; height: 7px;
+      background: var(--green);
+      border-radius: 50%;
+      margin-right: 8px;
+    }
+    .content { max-width: 1500px; margin: auto; padding: 28px; }
+    h1 { font-size: clamp(24px, 3vw, 34px); margin: 0 0 9px; }
+    h2 { font-size: 17px; margin: 0; }
+    p { color: var(--muted); line-height: 1.6; }
+    .accent { color: var(--cyan); }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 15px;
+      margin: 26px 0;
+    }
+    .card {
+      background: linear-gradient(145deg, var(--panel), var(--panel2));
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      min-width: 0;
+    }
+    .metric-label { color: var(--muted); font-size: 12px; }
+    .metric { font-size: 27px; font-weight: 750; margin: 13px 0 5px; }
+    .metric-note { color: var(--muted); font-size: 11px; }
+    .section-head {
+      display: flex; justify-content: space-between;
+      align-items: center; gap: 12px; margin-bottom: 17px;
+    }
+    .modules {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 15px;
+    }
+    .module-icon { font-size: 25px; margin-bottom: 15px; }
+    .module p { font-size: 13px; min-height: 42px; }
+    .btn {
+      color: #07111c;
+      background: var(--cyan);
+      border: 0;
+      border-radius: 8px;
+      padding: 11px 15px;
+      font-weight: 750;
+    }
+    .btn:hover { filter: brightness(1.1); }
+    .btn.secondary {
+      color: var(--text);
+      background: #182538;
+      border: 1px solid var(--border);
+    }
+    .btn:focus-visible, input:focus-visible {
+      outline: 2px solid var(--cyan);
+      outline-offset: 3px;
+    }
+    .console {
+      margin-top: 20px;
+      background: #060a10;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .console-top {
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+    }
+    #output {
+      padding: 17px;
+      min-height: 125px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      color: var(--green);
+      font: 12px/1.8 ui-monospace, Consolas, monospace;
+    }
+    .notice {
+      border: 1px solid #5b4823;
+      background: #211b11;
+      color: #eacb88;
+      border-radius: 10px;
+      padding: 13px 15px;
+      font-size: 12px;
+      line-height: 1.6;
+      margin-top: 20px;
+    }
+    .footer {
+      color: var(--muted);
+      font-size: 11px;
+      padding: 25px 0 5px;
+      text-align: center;
+    }
+    .mobile-menu { display: none; }
+    .form-row { display: flex; gap: 10px; margin-top: 12px; }
+    input {
+      min-width: 0; width: 100%;
+      color: var(--text); background: #080f1a;
+      border: 1px solid var(--border);
+      border-radius: 8px; padding: 11px 12px;
+    }
+
+    @media (max-width: 1050px) {
+      aside { width: 210px; }
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 720px) {
+      aside {
+        display: none; position: absolute; z-index: 5;
+        width: 250px; min-height: 100vh;
+        box-shadow: 10px 0 30px #0008;
+      }
+      aside.open { display: block; }
+      .mobile-menu { display: inline-block; }
+      header { padding: 15px; }
+      .content { padding: 22px 15px; }
+      .modules { grid-template-columns: 1fr; }
+      .grid { gap: 10px; }
+      .card { padding: 15px; }
+      .metric { font-size: 22px; }
+      .form-row { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+<div class="layout">
+  <aside id="sidebar">
+    <div class="brand"><div class="logo">⬡</div><span>ANON <span class="accent">CYBERSEC</span></span></div>
+    <div class="eyebrow">PLATAFORMA</div>
+    <button class="nav active" data-section="dashboard">▦ &nbsp; Dashboard</button>
+    <button class="nav" data-section="modules">⌘ &nbsp; Ferramentas</button>
+    <button class="nav" data-section="reports">▤ &nbsp; Relatórios</button>
+    <div class="eyebrow">RECURSOS</div>
+    <button class="nav" data-section="about">ⓘ &nbsp; Sobre o projeto</button>
+  </aside>
+
+  <main>
+    <header>
+      <div style="display:flex;align-items:center;gap:12px">
+        <button class="btn secondary mobile-menu" id="menuButton" aria-label="Abrir menu">☰</button>
+        <div><strong>Centro de segurança</strong><div class="metric-note">Painel de auditoria defensiva</div></div>
+      </div>
+      <div class="status">Interface ativa</div>
+    </header>
+
+    <div class="content">
+      <section id="dashboard">
+        <div class="eyebrow" style="margin-left:0">VISÃO GERAL / 001</div>
+        <h1>Security <span class="accent">Dashboard</span></h1>
+        <p>Centralize suas verificações defensivas e organize os resultados em um só lugar.</p>
+
+        <div class="grid">
+          <div class="card"><div class="metric-label">MÓDULOS</div><div class="metric">05</div><div class="metric-note">Ferramentas disponíveis</div></div>
+          <div class="card"><div class="metric-label">RELATÓRIOS</div><div class="metric" id="reportCount">00</div><div class="metric-note">Nesta sessão do navegador</div></div>
+          <div class="card"><div class="metric-label">VERIFICAÇÕES</div><div class="metric" id="checkCount">00</div><div class="metric-note">Ações na interface</div></div>
+          <div class="card"><div class="metric-label">MODO</div><div class="metric" style="font-size:21px;color:var(--green)">DEFENSIVO</div><div class="metric-note">Uso autorizado</div></div>
+        </div>
+
+        <div class="section-head"><h2>Ferramentas de auditoria</h2><span class="metric-note">V 1.0.0</span></div>
+        <div class="modules">
+          <article class="card module">
+            <div class="module-icon">⌘</div><h2>Consulta DNS</h2>
+            <p>Prepare uma consulta de resolução de domínio para executar no ambiente Python.</p>
+            <button class="btn" data-tool="dns">Abrir ferramenta</button>
+          </article>
+          <article class="card module">
+            <div class="module-icon">◎</div><h2>Cabeçalhos HTTP</h2>
+            <p>Registre uma URL para análise defensiva de cabeçalhos de segurança.</p>
+            <button class="btn" data-tool="http">Abrir ferramenta</button>
+          </article>
+          <article class="card module">
+            <div class="module-icon">♧</div><h2>Certificado TLS</h2>
+            <p>Prepare uma verificação de certificado HTTPS de um domínio autorizado.</p>
+            <button class="btn" data-tool="tls">Abrir ferramenta</button>
+          </article>
+          <article class="card module">
+            <div class="module-icon">▤</div><h2>Integridade de arquivos</h2>
+            <p>Calcule hashes SHA-256 de arquivos locais usando o programa Python.</p>
+            <button class="btn" data-tool="hash">Abrir ferramenta</button>
+          </article>
+          <article class="card module">
+            <div class="module-icon">⇄</div><h2>Portas TCP</h2>
+            <p>Organize uma verificação limitada de portas em equipamentos autorizados.</p>
+            <button class="btn" data-tool="ports">Abrir ferramenta</button>
+          </article>
+          <article class="card module">
+            <div class="module-icon">▣</div><h2>Exportar atividade</h2>
+            <p>Exporte um registro local das ações feitas nesta interface.</p>
+            <button class="btn secondary" id="exportButton">Exportar JSON</button>
+          </article>
+        </div>
+
+        <div class="console">
+          <div class="console-top"><span>TERMINAL / ATIVIDADE LOCAL</span><span>● PRONTO</span></div>
+          <div id="output" role="status" aria-live="polite">[+] ANON CYBERSEC PRO inicializado.
+[+] Interface pronta.
+[i] Selecione um módulo para começar.
+[i] As análises reais exigem o programa Python ou um backend.</div>
+        </div>
+        <div class="notice">⚠ Segurança: esta página é apenas uma interface visual. Ela não executa varreduras de rede nem acessa arquivos do servidor. Faça auditorias somente em sistemas próprios ou com autorização explícita.</div>
+      </section>
+
+      <section id="reports" hidden style="margin-top:35px">
+        <h2>Relatórios da sessão</h2>
+        <p>O histórico abaixo é mantido apenas na memória desta página. Exporte o JSON antes de fechar ou atualizar.</p>
+        <div class="card"><pre id="reportList" style="white-space:pre-wrap;overflow-wrap:anywhere">Nenhuma atividade registrada.</pre></div>
+      </section>
+
+      <section id="about" hidden style="margin-top:35px">
+        <h2>Sobre o ANON CYBERSEC PRO</h2>
+        <p>Projeto de interface para apoiar aprendizado e auditoria defensiva. A versão Python fornece ferramentas básicas de DNS, cabeçalhos HTTP, TLS, integridade de arquivos e verificação TCP limitada.</p>
+        <p>Para disponibilizar resultados reais pela web, implemente um backend seguro, autenticação, autorização por ativo e limites de uso. Não exponha comandos de sistema arbitrários ao navegador.</p>
+      </section>
+      <div class="footer">ANON CYBERSEC PRO · Segurança responsável · 2026</div>
+    </div>
+  </main>
+</div>
+
+<script>
+  const output = document.getElementById("output");
+  const reportList = document.getElementById("reportList");
+  const reports = [];
+  let checks = 0;
+
+  function log(message) {
+    output.textContent += "\n" + message;
+    output.scrollTop = output.scrollHeight;
+  }
+
+  function updateReports() {
+    reportList.textContent = reports.length
+      ? reports.map((r, i) => `${i + 1}. ${r.time} — ${r.action}${r.target ? " — " + r.target : ""}`).join("\n")
+      : "Nenhuma atividade registrada.";
+    document.getElementById("reportCount").textContent = String(reports.length).padStart(2, "0");
+  }
+
+  function record(action, target = "") {
+    checks++;
+    document.getElementById("checkCount").textContent = String(checks).padStart(2, "0");
+    reports.push({ time: new Date().toISOString(), action, target });
+    updateReports();
+  }
+
+  function validDomain(value) {
+    const input = value.trim();
+    try {
+      const url = new URL(input.includes("://") ? input : "https://" + input);
+      return url.hostname && !url.username && !url.password ? url.hostname : "";
+    } catch { return ""; }
+  }
+
+  document.querySelectorAll("[data-tool]").forEach(button => {
+    button.addEventListener("click", () => {
+      const type = button.dataset.tool;
+      const prompts = {
+        dns: ["Consulta DNS", "Digite um domínio para consultar no programa Python:"],
+        http: ["Cabeçalhos HTTP", "Digite uma URL completa, como https://example.com:"],
+        tls: ["Certificado TLS", "Digite o domínio autorizado:"],
+        hash: ["Integridade de arquivo", "Digite o caminho do arquivo para usar no programa Python:"],
+        ports: ["Verificação TCP", "Digite o host próprio/autorizado e as portas para preparar a análise:"]
+      };
+      const [name, question] = prompts[type];
+      const value = window.prompt(question);
+      if (value === null || !value.trim()) return;
+      if (["dns", "tls", "ports"].includes(type) && !validDomain(value) && !/^[\d.:a-f]+$/i.test(value.trim())) {
+        window.alert("Informe um domínio ou endereço IP válido.");
+        return;
+      }
+      if (type === "http") {
+        try {
+          const u = new URL(value);
+          if (!["http:", "https:"].includes(u.protocol) || u.username || u.password) throw new Error();
+        } catch {
+          window.alert("Informe uma URL http:// ou https:// válida.");
+          return;
+        }
+      }
+      log("[i] " + name + " preparado: " + value.trim());
+      log("[!] Esta interface não executa a análise real. Use anon_cybersec_pro.py no ambiente autorizado.");
+      record(name, value.trim());
+    });
+  });
+
+  document.querySelectorAll("[data-section]").forEach(button => {
+    button.addEventListener("click", () => {
+      document.querySelectorAll("[data-section]").forEach(b => b.classList.toggle("active", b === button));
+      const target = button.dataset.section;
+      document.getElementById("dashboard").hidden = target !== "dashboard";
+      document.getElementById("reports").hidden = target !== "reports";
+      document.getElementById("about").hidden = target !== "about";
+      document.getElementById("sidebar").classList.remove("open");
+    });
+  });
+
+  document.getElementById("menuButton").addEventListener("click", () => {
+    document.getElementById("sidebar").classList.toggle("open");
+  });
+
+  document.getElementById("exportButton").addEventListener("click", () => {
+    const blob = new Blob([JSON.stringify({
+      application: "ANON CYBERSEC PRO",
+      version: "1.0.0",
+      exportedAt: new Date().toISOString(),
+      note: "Registro de interface; não representa resultados técnicos de varredura.",
+      activities: reports
+    }, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "anon-cybersec-atividade.json";
+    a.click();
+    URL.revokeObjectURL(url);
+    log("[+] Registro JSON exportado.");
+  });
+</script>
+</body>
+</html></escape>
