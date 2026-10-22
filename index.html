@@ -1,11 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#080d16">
-  <title>ANON CYBERSEC PRO | Acesso seguro</title>
+  <meta name="description" content="ANON CYBERSEC PRO — central de ferramentas e recursos de cibersegurança defensiva.">
+  <title>ANON CYBERSEC PRO | Central de Segurança</title>
 
   <style>
     :root {
@@ -21,30 +21,47 @@
 
     * { box-sizing: border-box; }
 
+    html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
       min-height: 100vh;
       background: radial-gradient(ellipse at 50% -10%, #12384f, var(--bg) 62%);
       color: var(--text);
-      font: 15px/1.5 system-ui, Segoe UI, Arial, sans-serif;
+      font: 15px/1.6 system-ui, Segoe UI, Arial, sans-serif;
     }
 
+    a { color: inherit; text-decoration: none; }
     button, input { font: inherit; }
-    button { cursor: pointer; }
+    button, a { -webkit-tap-highlight-color: transparent; }
 
-    button:focus-visible, input:focus-visible {
+    button:focus-visible,
+    a:focus-visible,
+    input:focus-visible {
       outline: 2px solid var(--cyan);
       outline-offset: 3px;
     }
 
+    .wrap {
+      width: min(1120px, calc(100% - 36px));
+      margin-inline: auto;
+    }
+
     header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 16px;
-      padding: 20px max(18px, calc((100vw - 1120px) / 2));
+      position: sticky;
+      top: 0;
+      z-index: 10;
       border-bottom: 1px solid var(--line);
-      background: #080e17cc;
+      background: #080e17ed;
+      backdrop-filter: blur(14px);
+    }
+
+    .nav {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
     }
 
     .brand {
@@ -56,8 +73,8 @@
     }
 
     .logo {
-      width: 42px;
-      height: 42px;
+      width: 44px;
+      height: 44px;
       border: 1px solid #2b6077;
       background: #123246;
       border-radius: 13px;
@@ -65,630 +82,545 @@
       place-items: center;
       color: var(--cyan);
       font-size: 25px;
+      box-shadow: 0 0 24px #42dcff18;
     }
 
     .brand span, .accent { color: var(--cyan); }
-    .status { color: var(--green); font-size: 12px; }
 
-    main {
-      max-width: 1120px;
-      margin: auto;
-      padding: 42px 18px;
+    .brand small {
+      display: block;
+      color: var(--muted);
+      font-size: 9px;
+      letter-spacing: 1.8px;
     }
 
-    .layout {
-      display: grid;
-      grid-template-columns: 1fr minmax(320px, 420px);
-      gap: 34px;
+    .nav-links {
+      display: flex;
       align-items: center;
+      gap: 20px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .nav-links a:hover { color: var(--cyan); }
+
+    .status {
+      color: var(--green);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 42px;
+      align-items: center;
+      padding: 72px 0 48px;
     }
 
     .eyebrow {
-      font-size: 10px;
-      font-weight: 800;
-      letter-spacing: 2px;
       color: var(--cyan);
+      font-size: 10px;
+      font-weight: 850;
+      letter-spacing: 2px;
+      text-transform: uppercase;
     }
 
     h1 {
-      font-size: clamp(32px, 5vw, 52px);
-      line-height: 1.08;
-      letter-spacing: -1.7px;
-      margin: 12px 0;
+      margin: 14px 0;
+      font-size: clamp(36px, 5.5vw, 62px);
+      line-height: 1.04;
+      letter-spacing: -2px;
     }
 
-    h2 { font-size: 20px; margin: 0 0 8px; }
+    h2 { margin: 0 0 8px; font-size: 22px; }
+    h3 { margin: 0 0 8px; font-size: 16px; }
+    p { margin: 10px 0; }
+    .muted { color: var(--muted); }
 
-    .intro p, .muted {
+    .hero-copy { max-width: 650px; }
+
+    .hero-copy > p {
+      max-width: 600px;
+      font-size: 16px;
       color: var(--muted);
-      line-height: 1.75;
     }
 
-    .feature-list {
-      list-style: none;
-      padding: 0;
-      margin: 25px 0;
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 25px;
     }
 
-    .feature-list li {
-      margin: 12px 0;
-      color: #c8d8e8;
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 11px 16px;
+      font-weight: 800;
+      font-size: 13px;
+      cursor: pointer;
+      transition: transform .15s ease, border-color .15s ease;
     }
 
-    .feature-list li::before {
-      content: "✓";
-      color: var(--green);
-      margin-right: 10px;
+    .btn:hover {
+      transform: translateY(-2px);
+      border-color: var(--cyan);
     }
 
-    .panel {
-      background: linear-gradient(145deg, var(--panel), #0b1420);
+    .btn-primary {
+      background: linear-gradient(100deg, var(--cyan), #83baff);
+      color: #06111b;
+      border: 0;
+    }
+
+    .btn-secondary {
+      background: #142338;
+      color: var(--text);
+    }
+
+    .hero-card {
       border: 1px solid var(--line);
       border-radius: 20px;
-      padding: 25px;
-      box-shadow: 0 22px 65px #0004;
+      padding: 23px;
+      background: linear-gradient(145deg, #101e30, #0b1420);
+      box-shadow: 0 22px 65px #0005;
     }
 
-    .tabs {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 6px;
-      background: #080f19;
-      border: 1px solid var(--line);
-      border-radius: 11px;
-      padding: 5px;
-      margin: 20px 0;
-    }
-
-    .tab {
-      background: transparent;
-      color: var(--muted);
-      border: 0;
-      border-radius: 8px;
-      padding: 10px;
-      font-weight: 750;
-    }
-
-    .tab.active {
-      background: #163044;
-      color: var(--cyan);
-    }
-
-    label {
-      display: block;
-      margin: 14px 0 6px;
-      color: #bdcddd;
-      font-size: 12px;
-    }
-
-    input {
-      width: 100%;
-      padding: 12px 13px;
-      background: #080f19;
-      color: var(--text);
-      border: 1px solid var(--line);
-      border-radius: 10px;
-    }
-
-    input::placeholder { color: #63778e; }
-
-    .primary, .secondary {
-      width: 100%;
-      border-radius: 10px;
-      padding: 12px 14px;
-      font-weight: 800;
-      margin-top: 17px;
-    }
-
-    .primary {
-      border: 0;
-      color: #06111b;
-      background: linear-gradient(100deg, var(--cyan), #83baff);
-    }
-
-    .secondary {
-      border: 1px solid var(--line);
-      background: #142338;
-      color: var(--text);
-    }
-
-    button:disabled { opacity: .55; cursor: wait; }
-
-    .message {
-      display: none;
-      padding: 11px 12px;
-      border-radius: 9px;
-      margin-top: 14px;
-      font-size: 12px;
-      overflow-wrap: anywhere;
-    }
-
-    .message.show { display: block; }
-
-    .message.error {
-      background: #30191e;
-      border: 1px solid #70333d;
-      color: #ffb7b7;
-    }
-
-    .message.success {
-      background: #0b261d;
-      border: 1px solid #285e48;
-      color: #a7f2cf;
-    }
-
-    .fine {
-      font-size: 11px;
-      color: var(--muted);
-      margin-top: 16px;
-      line-height: 1.6;
-    }
-
-    .dashboard { display: none; }
-    .dashboard.show { display: block; }
-    .auth.hidden { display: none; }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 13px;
-      margin: 22px 0;
-    }
-
-    .mini {
-      border: 1px solid var(--line);
-      background: #0b1420;
-      border-radius: 13px;
-      padding: 16px;
-    }
-
-    .mini strong {
-      display: block;
-      color: var(--cyan);
-      font-size: 14px;
-    }
-
-    .mini span {
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .topline {
+    .card-head {
       display: flex;
       justify-content: space-between;
+      gap: 12px;
       align-items: center;
-      gap: 10px;
-      flex-wrap: wrap;
+      padding-bottom: 15px;
+      border-bottom: 1px solid var(--line);
     }
 
-    .logout {
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border: 1px solid #285e48;
+      border-radius: 99px;
+      padding: 5px 9px;
+      color: var(--green);
+      font-size: 10px;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 15px;
+    }
+
+    .metric {
       border: 1px solid var(--line);
-      background: #142338;
-      color: var(--text);
-      border-radius: 9px;
-      padding: 9px 12px;
+      background: #080f19;
+      border-radius: 12px;
+      padding: 15px;
     }
 
-    .warning {
+    .metric strong {
+      display: block;
+      color: var(--cyan);
+      font-size: 21px;
+    }
+
+    .metric span {
+      color: var(--muted);
       font-size: 11px;
-      color: #ead49b;
-      background: #211b10;
+    }
+
+    .section { padding: 35px 0; }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+
+    .section-head p {
+      max-width: 580px;
+      color: var(--muted);
+      margin-bottom: 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 15px;
+    }
+
+    .tool-card {
+      min-height: 190px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: linear-gradient(145deg, var(--panel), #0b1420);
+      transition: transform .18s ease, border-color .18s ease;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-3px);
+      border-color: #36728a;
+    }
+
+    .tool-icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: #123246;
+      color: var(--cyan);
+      font-size: 20px;
+      margin-bottom: 15px;
+    }
+
+    .tool-card p {
+      color: var(--muted);
+      font-size: 13px;
+      min-height: 42px;
+    }
+
+    .card-link {
+      color: var(--cyan);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .notice {
       border: 1px solid #665128;
-      border-radius: 10px;
-      padding: 12px;
+      background: #211b10;
+      color: #ead49b;
+      border-radius: 13px;
+      padding: 15px 17px;
+      font-size: 12px;
       line-height: 1.7;
     }
 
+    .search-row {
+      display: flex;
+      gap: 10px;
+      margin: 0 0 18px;
+    }
+
+    .search-row input {
+      flex: 1;
+      min-width: 0;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px 14px;
+      background: #080f19;
+      color: var(--text);
+    }
+
+    .empty {
+      display: none;
+      color: var(--muted);
+      padding: 18px 0;
+    }
+
     footer {
-      text-align: center;
+      margin-top: 35px;
+      border-top: 1px solid var(--line);
       color: #71859d;
       font-size: 11px;
-      padding: 24px 15px;
+      padding: 25px 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
     @media (max-width: 800px) {
-      .layout { grid-template-columns: 1fr; gap: 22px; }
-      .intro { padding: 0 4px; }
-      .feature-list { margin: 15px 0; }
-      .panel { padding: 20px; }
-      .cards { grid-template-columns: 1fr; }
+      .hero {
+        grid-template-columns: 1fr;
+        gap: 25px;
+        padding-top: 45px;
+      }
+
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .nav-links { gap: 12px; }
     }
 
-    @media (max-width: 430px) {
-      header { padding: 14px; }
-      .brand { font-size: 13px; }
-      .status { display: none; }
-      main { padding: 25px 12px; }
+    @media (max-width: 560px) {
+      .wrap { width: min(100% - 26px, 1120px); }
+      .nav { min-height: 68px; }
+      .nav-links { display: none; }
+      .status { font-size: 10px; }
+      .hero { padding: 35px 0 25px; }
+      h1 { letter-spacing: -1px; }
+      .grid, .metric-grid { grid-template-columns: 1fr; }
+      .section-head { align-items: start; flex-direction: column; }
+      .tool-card { min-height: 0; }
     }
   </style>
 </head>
 
 <body>
   <header>
-    <div class="brand">
-      <div class="logo">⬡</div>
-      <div>
-        ANON <span>CYBERSEC PRO</span>
-        <div class="muted" style="font-size:10px;letter-spacing:1.5px">
-          SECURITY CENTER
+    <div class="wrap nav">
+      <a class="brand" href="#inicio" aria-label="ANON CYBERSEC PRO - início">
+        <div class="logo">⬡</div>
+        <div>
+          ANON <span>CYBERSEC PRO</span>
+          <small>SECURITY CENTER</small>
         </div>
-      </div>
+      </a>
+
+      <nav class="nav-links" aria-label="Navegação principal">
+        <a href="#ferramentas">Ferramentas</a>
+        <a href="#recursos">Recursos</a>
+        <a href="#sobre">Sobre</a>
+      </nav>
+
+      <div class="status">● CENTRAL ATIVA</div>
     </div>
-    <div class="status" id="apiStatus">● Verificando API...</div>
   </header>
 
-  <main>
-    <div class="layout">
-      <section class="intro">
-        <div class="eyebrow">SECURITY OPERATIONS · ACCESS PORTAL</div>
+  <main class="wrap" id="inicio">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow">Security operations · Central de recursos</div>
 
-        <h1>
-          Segurança começa com
-          <span class="accent">acesso controlado.</span>
-        </h1>
+        <h1>Seu centro de <span class="accent">cibersegurança.</span></h1>
 
         <p>
-          Entre no seu painel de cibersegurança ou crie
-          uma conta para começar a organizar suas atividades defensivas.
+          Um painel organizado para acessar recursos de segurança digital,
+          aprender boas práticas e acompanhar suas atividades defensivas.
+          Sem cadastro ou tela de login.
         </p>
 
-        <ul class="feature-list">
-          <li>Cadastro e autenticação no backend</li>
-          <li>Senhas armazenadas com hash seguro</li>
-          <li>Token de sessão e área protegida</li>
-          <li>Interface adaptada para celular e computador</li>
-        </ul>
-
-        <div class="warning">
-          Use uma senha única. Antes de abrir o cadastro ao público,
-          adicione verificação de e-mail, recuperação de senha,
-          limites de tentativas e monitoramento.
+        <div class="actions">
+          <a class="btn btn-primary" href="#ferramentas">
+            Explorar ferramentas <span aria-hidden="true">→</span>
+          </a>
+          <a class="btn btn-secondary" href="#recursos">Ver recursos</a>
         </div>
-      </section>
+      </div>
 
-      <section class="panel">
-        <div class="auth" id="authView">
-          <div class="eyebrow">MEMBER ACCESS</div>
-          <h2 id="formTitle">Acesse sua conta</h2>
-
-          <div class="muted" id="formSubtitle">
-            Entre com suas credenciais.
+      <aside class="hero-card" aria-label="Resumo da central">
+        <div class="card-head">
+          <div>
+            <div class="eyebrow">SYSTEM OVERVIEW</div>
+            <h2 style="margin-top:5px">Central de segurança</h2>
           </div>
-
-          <div class="tabs">
-            <button class="tab active" id="loginTab" type="button">
-              Entrar
-            </button>
-            <button class="tab" id="registerTab" type="button">
-              Criar conta
-            </button>
-          </div>
-
-          <form id="authForm">
-            <div id="nameField" hidden>
-              <label for="name">Nome de exibição</label>
-              <input
-                id="name"
-                name="name"
-                maxlength="60"
-                autocomplete="name"
-                placeholder="Seu nome"
-              >
-            </div>
-
-            <label for="email">E-mail</label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              maxlength="254"
-              autocomplete="email"
-              required
-              placeholder="voce@exemplo.com"
-            >
-
-            <label for="password">Senha</label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              minlength="10"
-              maxlength="128"
-              autocomplete="current-password"
-              required
-              placeholder="Mínimo de 10 caracteres"
-            >
-
-            <div id="passwordHint" class="fine">
-              Use pelo menos 10 caracteres.
-            </div>
-
-            <button class="primary" id="submitBtn" type="submit">
-              Entrar com segurança
-            </button>
-          </form>
-
-          <div class="message" id="message" role="status" aria-live="polite"></div>
-
-          <div class="fine">
-            Ao criar uma conta, você concorda em usar o serviço de forma
-            responsável. Não use senhas de outros sites.
-          </div>
+          <span class="pill"><span class="dot"></span> Interface pronta</span>
         </div>
 
-        <div class="dashboard" id="dashboard">
-          <div class="topline">
-            <div>
-              <div class="eyebrow">AUTHENTICATED SESSION</div>
-              <h2>Bem-vindo(a)!</h2>
-            </div>
-            <button class="logout" id="logout" type="button">Sair</button>
-          </div>
+        <p class="muted" style="font-size:13px">
+          Resumo do estado desta página. Não representa uma varredura real do dispositivo.
+        </p>
 
-          <p class="muted" id="userSummary">Sessão autenticada.</p>
+        <div class="metric-grid">
+          <div class="metric"><strong>01</strong><span>Painel público</span></div>
+          <div class="metric"><strong>HTTPS</strong><span>Recomendado ao publicar</span></div>
+          <div class="metric"><strong>0</strong><span>Contas exigidas</span></div>
+          <div class="metric"><strong>DEF</strong><span>Foco defensivo</span></div>
+        </div>
+      </aside>
+    </section>
 
-          <div class="cards">
-            <div class="mini">
-              <strong>ATIVO</strong>
-              <span>Status da sessão</span>
-            </div>
-            <div class="mini">
-              <strong>JWT</strong>
-              <span>Autenticação</span>
-            </div>
-            <div class="mini">
-              <strong>PRO</strong>
-              <span>Workspace</span>
-            </div>
-          </div>
-
-          <h2>Área do usuário</h2>
-          <p class="muted">
-            Sua conta está conectada ao backend. Este painel inicial pode
-            ser ampliado com histórico, relatórios e ferramentas autorizadas.
+    <section class="section" id="ferramentas">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Workspace</div>
+          <h2>Ferramentas e atalhos</h2>
+          <p>
+            Pesquise os cartões e abra os recursos disponíveis. Os atalhos externos
+            são referências; eles não executam testes automaticamente.
           </p>
-
-          <button class="secondary" id="refreshProfile" type="button">
-            Atualizar perfil
-          </button>
-
-          <div class="message" id="dashMessage" role="status" aria-live="polite"></div>
         </div>
-      </section>
-    </div>
+      </div>
+
+      <div class="search-row">
+        <input id="toolSearch" type="search" placeholder="Pesquisar ferramentas..." aria-label="Pesquisar ferramentas">
+        <button class="btn btn-secondary" id="clearSearch" type="button">Limpar</button>
+      </div>
+
+      <div class="grid" id="toolGrid">
+        <article class="tool-card" data-search="aprendizado documentação segurança">
+          <div class="tool-icon" aria-hidden="true">⌘</div>
+          <h3>Aprender segurança</h3>
+          <p>Estude conceitos de cibersegurança, redes e proteção de sistemas.</p>
+          <a class="card-link" href="https://owasp.org/www-project-top-ten/" target="_blank" rel="noopener noreferrer">Abrir OWASP ↗</a>
+        </article>
+
+        <article class="tool-card" data-search="senhas senha auditoria segurança">
+          <div class="tool-icon" aria-hidden="true">⛨</div>
+          <h3>Boas práticas de senhas</h3>
+          <p>Aprenda a criar senhas únicas e proteger suas contas pessoais.</p>
+          <a class="card-link" href="https://haveibeenpwned.com/" target="_blank" rel="noopener noreferrer">Verificar e-mail ↗</a>
+        </article>
+
+        <article class="tool-card" data-search="cabeçalhos http web segurança">
+          <div class="tool-icon" aria-hidden="true">⌁</div>
+          <h3>Segurança web</h3>
+          <p>Consulte orientações para proteger sites e aplicações web.</p>
+          <a class="card-link" href="https://developer.mozilla.org/docs/Web/HTTP" target="_blank" rel="noopener noreferrer">Documentação HTTP ↗</a>
+        </article>
+
+        <article class="tool-card" data-search="linux kali terminal documentação">
+          <div class="tool-icon" aria-hidden="true">▣</div>
+          <h3>Linux e terminal</h3>
+          <p>Consulte documentação oficial para administração e aprendizado em Linux.</p>
+          <a class="card-link" href="https://www.kali.org/docs/" target="_blank" rel="noopener noreferrer">Documentação Kali ↗</a>
+        </article>
+
+        <article class="tool-card" data-search="privacidade conta proteção digital">
+          <div class="tool-icon" aria-hidden="true">◈</div>
+          <h3>Privacidade digital</h3>
+          <p>Confira recomendações para melhorar a privacidade e segurança online.</p>
+          <a class="card-link" href="https://www.cisa.gov/secure-our-world" target="_blank" rel="noopener noreferrer">Guia de segurança ↗</a>
+        </article>
+
+        <article class="tool-card" data-search="relatórios notas documentação">
+          <div class="tool-icon" aria-hidden="true">▤</div>
+          <h3>Notas e relatórios</h3>
+          <p>Abra um bloco local simples para organizar anotações nesta sessão.</p>
+          <button class="card-link" id="openNotes" type="button" style="border:0;background:none;padding:0">
+            Abrir bloco de notas →
+          </button>
+        </article>
+      </div>
+
+      <p class="empty" id="emptyState">Nenhuma ferramenta encontrada para essa pesquisa.</p>
+    </section>
+
+    <section class="section" id="recursos">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Recursos</div>
+          <h2>Atalhos úteis</h2>
+          <p>Referências para desenvolver habilidades de segurança de forma responsável.</p>
+        </div>
+      </div>
+
+      <div class="notice">
+        Use ferramentas apenas em dispositivos, contas, redes e aplicações que sejam seus
+        ou para os quais você tenha autorização explícita. Este painel é uma interface estática:
+        não realiza varreduras, não consulta sistemas privados e não armazena contas.
+      </div>
+    </section>
+
+    <section class="section" id="sobre">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Sobre o projeto</div>
+          <h2>ANON CYBERSEC PRO</h2>
+          <p>Interface pública sem login, pronta para hospedar como página estática no GitHub Pages.</p>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer>
-    ANON CYBERSEC PRO · Não publique segredos no frontend.
+    <div class="wrap footer-inner">
+      <span>ANON CYBERSEC PRO · Central de Segurança</span>
+      <span id="year"></span>
+    </div>
   </footer>
 
+  <dialog id="notesDialog" style="width:min(600px,calc(100% - 28px));border:1px solid #263b52;border-radius:16px;background:#101b2a;color:#eaf4ff;padding:22px">
+    <form method="dialog">
+      <div class="card-head">
+        <div>
+          <div class="eyebrow">Anotações locais</div>
+          <h2 style="margin-top:6px">Bloco de notas</h2>
+        </div>
+        <button class="btn btn-secondary" aria-label="Fechar bloco de notas">Fechar</button>
+      </div>
+
+      <p class="muted" style="font-size:12px">
+        As notas existem apenas enquanto esta janela estiver aberta; copie o conteúdo antes de fechar.
+      </p>
+
+      <textarea id="notesText" rows="8" placeholder="Escreva suas notas aqui..." style="width:100%;resize:vertical;background:#080f19;color:#eaf4ff;border:1px solid #263b52;border-radius:10px;padding:12px;font:inherit"></textarea>
+
+      <div class="actions">
+        <button class="btn btn-primary" id="copyNotes" type="button">Copiar notas</button>
+        <button class="btn btn-secondary" type="submit">Concluir</button>
+      </div>
+
+      <p class="muted" id="notesStatus" aria-live="polite" style="font-size:12px"></p>
+    </form>
+  </dialog>
+
   <script>
-    /*
-      Configure abaixo a URL HTTPS REAL do seu backend no Render.
-      Não coloque /api no final da URL.
-    */
-    const API_BASE = "https://COLOQUE-A-URL-DO-SEU-BACKEND.onrender.com";
-    const TOKEN_KEY = "anon_cybersec_token";
+    const searchInput = document.getElementById("toolSearch");
+    const cards = [...document.querySelectorAll(".tool-card")];
+    const emptyState = document.getElementById("emptyState");
 
-    const $ = (selector) => document.querySelector(selector);
-    let mode = "login";
+    function filterTools() {
+      const term = searchInput.value.trim().toLocaleLowerCase("pt-BR");
+      let visible = 0;
 
-    function showMessage(text, type = "error", target = "#message") {
-      const el = $(target);
-      el.textContent = text;
-      el.className = "message show " + type;
+      cards.forEach(card => {
+        const text = (
+          card.innerText + " " + (card.dataset.search || "")
+        ).toLocaleLowerCase("pt-BR");
+
+        const match = text.includes(term);
+        card.hidden = !match;
+
+        if (match) visible++;
+      });
+
+      emptyState.style.display = visible ? "none" : "block";
     }
 
-    function clearMessage() {
-      $("#message").className = "message";
-      $("#message").textContent = "";
-    }
+    searchInput.addEventListener("input", filterTools);
 
-    function apiUrl(path) {
-      if (API_BASE.includes("COLOQUE-A-URL")) {
-        throw new Error(
-          "Configure API_BASE no index.html com a URL HTTPS real do backend publicado."
-        );
+    document.getElementById("clearSearch").addEventListener("click", () => {
+      searchInput.value = "";
+      filterTools();
+      searchInput.focus();
+    });
+
+    const notesDialog = document.getElementById("notesDialog");
+
+    document.getElementById("openNotes").addEventListener("click", () => {
+      if (typeof notesDialog.showModal === "function") {
+        notesDialog.showModal();
+      } else {
+        alert("Seu navegador não suporta a janela de notas. Atualize o navegador.");
       }
-      return API_BASE.replace(/\/+$/, "") + path;
-    }
+    });
 
-    async function api(path, options = {}) {
-      const token = sessionStorage.getItem(TOKEN_KEY);
-
-      const headers = {
-        "Content-Type": "application/json",
-        ...(options.headers || {})
-      };
-
-      if (token) {
-        headers.Authorization = "Bearer " + token;
-      }
-
-      let response;
+    document.getElementById("copyNotes").addEventListener("click", async () => {
+      const text = document.getElementById("notesText").value;
+      const status = document.getElementById("notesStatus");
 
       try {
-        response = await fetch(apiUrl(path), {
-          ...options,
-          headers
-        });
+        await navigator.clipboard.writeText(text);
+        status.textContent = "Notas copiadas.";
       } catch {
-        throw new Error(
-          "Não foi possível conectar à API. Confira a URL do Render, se o backend está online e se o CORS permite o endereço do GitHub Pages."
-        );
-      }
-
-      const data = await response.json().catch(() => ({}));
-
-      if (!response.ok) {
-        throw new Error(
-          data.detail || data.error || "A solicitação falhou."
-        );
-      }
-
-      return data;
-    }
-
-    function setMode(next) {
-      mode = next;
-      const registering = mode === "register";
-
-      $("#loginTab").classList.toggle("active", !registering);
-      $("#registerTab").classList.toggle("active", registering);
-      $("#nameField").hidden = !registering;
-      $("#name").required = registering;
-
-      $("#password").autocomplete = registering
-        ? "new-password"
-        : "current-password";
-
-      $("#formTitle").textContent = registering
-        ? "Crie sua conta"
-        : "Acesse sua conta";
-
-      $("#formSubtitle").textContent = registering
-        ? "Preencha os campos para se cadastrar."
-        : "Entre com suas credenciais.";
-
-      $("#submitBtn").textContent = registering
-        ? "Criar conta segura"
-        : "Entrar com segurança";
-
-      $("#passwordHint").textContent = registering
-        ? "Mínimo de 10 caracteres; prefira uma frase-senha única."
-        : "Digite a senha cadastrada.";
-
-      clearMessage();
-    }
-
-    function showAuth() {
-      $("#authView").classList.remove("hidden");
-      $("#dashboard").classList.remove("show");
-    }
-
-    function showDashboard(user) {
-      $("#authView").classList.add("hidden");
-      $("#dashboard").classList.add("show");
-
-      $("#userSummary").textContent =
-        `${user.name || "Usuário"} · ${user.email || ""}`;
-    }
-
-    async function loadProfile() {
-      const token = sessionStorage.getItem(TOKEN_KEY);
-
-      if (!token) {
-        showAuth();
-        return;
-      }
-
-      try {
-        const data = await api("/api/auth/me");
-        showDashboard(data.user);
-      } catch {
-        sessionStorage.removeItem(TOKEN_KEY);
-        showAuth();
-      }
-    }
-
-    $("#loginTab").addEventListener("click", () => setMode("login"));
-    $("#registerTab").addEventListener("click", () => setMode("register"));
-
-    $("#authForm").addEventListener("submit", async (event) => {
-      event.preventDefault();
-      clearMessage();
-
-      const btn = $("#submitBtn");
-      btn.disabled = true;
-      btn.textContent = "Aguarde...";
-
-      const payload = {
-        email: $("#email").value.trim(),
-        password: $("#password").value
-      };
-
-      if (mode === "register") {
-        payload.name = $("#name").value.trim();
-      }
-
-      try {
-        const endpoint = mode === "register"
-          ? "/api/auth/register"
-          : "/api/auth/login";
-
-        const data = await api(endpoint, {
-          method: "POST",
-          body: JSON.stringify(payload)
-        });
-
-        if (!data.access_token || !data.user) {
-          throw new Error("Resposta inesperada do servidor. Confira o backend.");
-        }
-
-        sessionStorage.setItem(TOKEN_KEY, data.access_token);
-        showDashboard(data.user);
-        $("#password").value = "";
-
-        showMessage(
-          mode === "register"
-            ? "Conta criada com sucesso."
-            : "Login realizado com sucesso.",
-          "success",
-          "#dashMessage"
-        );
-      } catch (error) {
-        showMessage(error.message || "Não foi possível concluir a operação.");
-      } finally {
-        btn.disabled = false;
-        btn.textContent = mode === "register"
-          ? "Criar conta segura"
-          : "Entrar com segurança";
+        document.getElementById("notesText").focus();
+        document.getElementById("notesText").select();
+        status.textContent = "Não foi possível copiar automaticamente. Use Ctrl+C.";
       }
     });
 
-    $("#logout").addEventListener("click", () => {
-      sessionStorage.removeItem(TOKEN_KEY);
-      $("#authForm").reset();
-      setMode("login");
-      showAuth();
-
-      showMessage("Você saiu da sua conta.", "success");
-    });
-
-    $("#refreshProfile").addEventListener("click", async () => {
-      const btn = $("#refreshProfile");
-      btn.disabled = true;
-
-      try {
-        const data = await api("/api/auth/me");
-        showDashboard(data.user);
-        showMessage("Perfil atualizado.", "success", "#dashMessage");
-      } catch (error) {
-        showMessage(
-          error.message || "Não foi possível atualizar o perfil.",
-          "error",
-          "#dashMessage"
-        );
-      } finally {
-        btn.disabled = false;
-      }
-    });
-
-    (async () => {
-      try {
-        const health = await api("/api/health");
-        $("#apiStatus").textContent = health.ok
-          ? "● API online"
-          : "● API indisponível";
-      } catch (error) {
-        $("#apiStatus").textContent = API_BASE.includes("COLOQUE-A-URL")
-          ? "● Configure a API"
-          : "● API indisponível";
-        $("#apiStatus").title = error.message;
-      }
-
-      await loadProfile();
-    })();
+    document.getElementById("year").textContent =
+      "© " + new Date().getFullYear() + " · Segurança defensiva";
   </script>
 </body>
 </html>
