@@ -1,0 +1,520 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#070b14">
+  <meta name="description" content="Biblioteca de ferramentas para estudar segurança digital, desenvolvimento, redes e privacidade.">
+  <title>Ferramentas | ANON CYBERSEC PRO</title>
+
+  <style>
+    :root {
+      --bg: #070b14;
+      --panel: #101b2d;
+      --line: rgba(125, 170, 205, .2);
+      --text: #edf7ff;
+      --muted: #91a5ba;
+      --cyan: #45e6ff;
+      --green: #70ffb0;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(ellipse at top left, #102337, transparent 45%),
+        var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+    }
+
+    a { color: inherit; }
+
+    .container {
+      width: min(1120px, calc(100% - 32px));
+      margin: auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(7, 11, 20, .94);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .navbar {
+      min-height: 76px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+      padding: 12px 0;
+    }
+
+    .brand {
+      color: var(--cyan);
+      text-decoration: none;
+      font-weight: 900;
+      letter-spacing: 1px;
+      font-size: 1.1rem;
+    }
+
+    .brand small {
+      display: block;
+      color: var(--muted);
+      font-size: .68rem;
+      letter-spacing: 3px;
+    }
+
+    nav {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: .92rem;
+    }
+
+    nav a:hover { color: var(--cyan); }
+
+    .hero {
+      padding: 75px 0 45px;
+    }
+
+    .eyebrow {
+      color: var(--green);
+      font-size: .8rem;
+      font-weight: bold;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(2.3rem, 6vw, 4.4rem);
+      line-height: 1.08;
+      letter-spacing: -2px;
+      margin: 15px 0;
+    }
+
+    h1 span { color: var(--cyan); }
+
+    .intro {
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .status {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 15px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      color: var(--green);
+      background: rgba(112, 255, 176, .04);
+      font-size: .85rem;
+    }
+
+    .library { padding: 20px 0 70px; }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: 1fr 250px;
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    input, select {
+      width: 100%;
+      min-height: 48px;
+      padding: 12px 14px;
+      color: var(--text);
+      background: #0d1422;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    input:focus, select:focus {
+      border-color: var(--cyan);
+      box-shadow: 0 0 0 3px rgba(69, 230, 255, .1);
+    }
+
+    .results {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
+      color: var(--muted);
+      font-size: .9rem;
+      margin: 18px 0;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 17px;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      min-height: 245px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: linear-gradient(145deg, #101b2d, #0a111d);
+      transition: .2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(69, 230, 255, .6);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, .25);
+    }
+
+    .card[hidden] { display: none; }
+
+    .card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .icon {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      background: rgba(69, 230, 255, .08);
+      border: 1px solid rgba(69, 230, 255, .2);
+      font-size: 1.4rem;
+    }
+
+    .tag {
+      color: var(--green);
+      font-size: .67rem;
+      font-weight: bold;
+      letter-spacing: .5px;
+      border: 1px solid rgba(112, 255, 176, .2);
+      border-radius: 30px;
+      padding: 5px 9px;
+    }
+
+    .card h2 {
+      font-size: 1.12rem;
+      margin: 17px 0 8px;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: .92rem;
+      margin: 0 0 20px;
+    }
+
+    .card a {
+      color: var(--cyan);
+      text-decoration: none;
+      font-weight: bold;
+      margin-top: auto;
+    }
+
+    .card a:hover { text-decoration: underline; }
+
+    .empty {
+      display: none;
+      padding: 30px;
+      text-align: center;
+      border: 1px dashed var(--line);
+      border-radius: 15px;
+      color: var(--muted);
+    }
+
+    .notice {
+      margin-top: 28px;
+      padding: 20px;
+      border-radius: 15px;
+      border: 1px solid rgba(112, 255, 176, .2);
+      background: rgba(112, 255, 176, .04);
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    .notice strong { color: var(--green); }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 25px 0;
+      color: var(--muted);
+      font-size: .85rem;
+    }
+
+    footer a {
+      color: var(--cyan);
+      text-decoration: none;
+    }
+
+    @media (max-width: 850px) {
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 580px) {
+      .toolbar, .grid { grid-template-columns: 1fr; }
+      .hero { padding-top: 48px; }
+      .navbar { align-items: flex-start; }
+      nav { gap: 12px; }
+      .card { min-height: 210px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <div class="container navbar">
+    <a class="brand" href="index.html">
+      ANON CYBERSEC PRO
+      <small>CENTRAL DE RECURSOS</small>
+    </a>
+
+    <nav aria-label="Navegação principal">
+      <a href="index.html">Início</a>
+      <a href="#biblioteca">Ferramentas</a>
+      <a href="#uso-responsavel">Uso responsável</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="container">
+      <div class="eyebrow">/ biblioteca digital</div>
+
+      <h1>
+        Ferramentas para aprender.<br>
+        <span>Conhecimento para proteger.</span>
+      </h1>
+
+      <p class="intro">
+        Explore recursos para aprender cibersegurança, desenvolvimento web,
+        redes e privacidade. Os laboratórios permitem estudar conceitos
+        de segurança em ambientes próprios e autorizados.
+      </p>
+
+      <div class="status">● CATÁLOGO ONLINE — SEM API</div>
+    </div>
+  </section>
+
+  <section class="library" id="biblioteca">
+    <div class="container">
+      <div class="eyebrow">/ explorar recursos</div>
+
+      <div class="toolbar">
+        <input
+          id="search"
+          type="search"
+          placeholder="Pesquisar ferramenta ou assunto..."
+          aria-label="Pesquisar ferramentas"
+        >
+
+        <select id="category" aria-label="Filtrar por categoria">
+          <option value="all">Todas as categorias</option>
+          <option value="security">Segurança digital</option>
+          <option value="development">Desenvolvimento</option>
+          <option value="networks">Redes e web</option>
+          <option value="privacy">Privacidade</option>
+          <option value="lab">Laboratórios de estudo</option>
+        </select>
+      </div>
+
+      <div class="results">
+        <span id="count" aria-live="polite">12 recursos disponíveis</span>
+        <span>Escolha um cartão para abrir o recurso.</span>
+      </div>
+
+      <div class="grid" id="grid">
+
+        <article class="card" data-category="security"
+          data-search="owasp segurança web vulnerabilidades proteção">
+          <div class="card-head"><span class="icon">🛡️</span><span class="tag">SEGURANÇA</span></div>
+          <h2>OWASP</h2>
+          <p>Guias e projetos para entender riscos comuns em aplicações web e aprender boas práticas de proteção.</p>
+          <a href="https://owasp.org/" target="_blank" rel="noopener noreferrer">Abrir OWASP ↗</a>
+        </article>
+
+        <article class="card" data-category="security"
+          data-search="cisa segurança cibernética defesa proteção">
+          <div class="card-head"><span class="icon">🔐</span><span class="tag">SEGURANÇA</span></div>
+          <h2>CISA</h2>
+          <p>Orientações de segurança cibernética, recomendações defensivas e materiais educativos.</p>
+          <a href="https://www.cisa.gov/secure-our-world" target="_blank" rel="noopener noreferrer">Abrir CISA ↗</a>
+        </article>
+
+        <article class="card" data-category="security"
+          data-search="have i been pwned email vazamento conta">
+          <div class="card-head"><span class="icon">📨</span><span class="tag">CONTAS</span></div>
+          <h2>Have I Been Pwned</h2>
+          <p>Consulte se um endereço de e-mail aparece em vazamentos de dados conhecidos.</p>
+          <a href="https://haveibeenpwned.com/" target="_blank" rel="noopener noreferrer">Verificar e-mail ↗</a>
+        </article>
+
+        <article class="card" data-category="development"
+          data-search="mdn html css javascript programação web">
+          <div class="card-head"><span class="icon">💻</span><span class="tag">DESENVOLVIMENTO</span></div>
+          <h2>MDN Web Docs</h2>
+          <p>Documentação e tutoriais de HTML, CSS, JavaScript e tecnologias da web.</p>
+          <a href="https://developer.mozilla.org/pt-BR/" target="_blank" rel="noopener noreferrer">Abrir MDN ↗</a>
+        </article>
+
+        <article class="card" data-category="development"
+          data-search="github git repositórios documentação código">
+          <div class="card-head"><span class="icon">🧰</span><span class="tag">DESENVOLVIMENTO</span></div>
+          <h2>GitHub Docs</h2>
+          <p>Aprenda a trabalhar com repositórios, Git, colaboração e publicação de projetos.</p>
+          <a href="https://docs.github.com/pt" target="_blank" rel="noopener noreferrer">Abrir documentação ↗</a>
+        </article>
+
+        <article class="card" data-category="networks"
+          data-search="http status cabeçalhos protocolo web">
+          <div class="card-head"><span class="icon">🌐</span><span class="tag">REDES E WEB</span></div>
+          <h2>HTTP — MDN</h2>
+          <p>Entenda requisições, respostas, cabeçalhos e códigos de status HTTP.</p>
+          <a href="https://developer.mozilla.org/pt-BR/docs/Web/HTTP" target="_blank" rel="noopener noreferrer">Estudar HTTP ↗</a>
+        </article>
+
+        <article class="card" data-category="networks"
+          data-search="cloudflare dns tls https redes internet">
+          <div class="card-head"><span class="icon">☁️</span><span class="tag">REDES E WEB</span></div>
+          <h2>Cloudflare Learning</h2>
+          <p>Explicações sobre DNS, HTTPS, TLS, redes e segurança na internet.</p>
+          <a href="https://www.cloudflare.com/learning/" target="_blank" rel="noopener noreferrer">Abrir biblioteca ↗</a>
+        </article>
+
+        <article class="card" data-category="privacy"
+          data-search="privacy guides privacidade navegadores dados">
+          <div class="card-head"><span class="icon">🕶️</span><span class="tag">PRIVACIDADE</span></div>
+          <h2>Privacy Guides</h2>
+          <p>Informações e recomendações para melhorar a privacidade e reduzir a exposição de dados.</p>
+          <a href="https://www.privacyguides.org/" target="_blank" rel="noopener noreferrer">Abrir Privacy Guides ↗</a>
+        </article>
+
+        <article class="card" data-category="lab"
+          data-search="portswigger web security academy laboratório treinamento">
+          <div class="card-head"><span class="icon">🧪</span><span class="tag">LABORATÓRIO</span></div>
+          <h2>PortSwigger Web Security Academy</h2>
+          <p>Conteúdo e laboratórios educativos para praticar segurança web em ambiente de treinamento.</p>
+          <a href="https://portswigger.net/web-security" target="_blank" rel="noopener noreferrer">Abrir laboratórios ↗</a>
+        </article>
+
+        <article class="card" data-category="lab"
+          data-search="owasp juice shop aplicação vulnerável laboratório">
+          <div class="card-head"><span class="icon">🧩</span><span class="tag">LABORATÓRIO</span></div>
+          <h2>OWASP Juice Shop</h2>
+          <p>Aplicação de treinamento intencionalmente vulnerável para estudar segurança em laboratório.</p>
+          <a href="https://owasp.org/www-project-juice-shop/" target="_blank" rel="noopener noreferrer">Conhecer projeto ↗</a>
+        </article>
+
+        <article class="card" data-category="lab"
+          data-search="kali linux documentação ferramentas laboratório">
+          <div class="card-head"><span class="icon">🐉</span><span class="tag">LABORATÓRIO</span></div>
+          <h2>Kali Linux Docs</h2>
+          <p>Documentação oficial para configurar o sistema e aprender seu uso em testes autorizados.</p>
+          <a href="https://www.kali.org/docs/" target="_blank" rel="noopener noreferrer">Abrir documentação ↗</a>
+        </article>
+
+        <article class="card" data-category="development"
+          data-search="javascript info tutorial programação">
+          <div class="card-head"><span class="icon">📘</span><span class="tag">DESENVOLVIMENTO</span></div>
+          <h2>JavaScript.info</h2>
+          <p>Tutorial para estudar JavaScript, do básico aos recursos mais avançados.</p>
+          <a href="https://javascript.info/" target="_blank" rel="noopener noreferrer">Estudar JavaScript ↗</a>
+        </article>
+
+      </div>
+
+      <div class="empty" id="empty">
+        Nenhum recurso encontrado. Tente outra pesquisa ou categoria.
+      </div>
+
+      <aside class="notice" id="uso-responsavel">
+        <strong>Uso responsável:</strong>
+        utilize ferramentas de segurança somente em sistemas seus,
+        laboratórios de treinamento ou ambientes para os quais tenha
+        autorização explícita. Não use estes recursos para invadir contas,
+        coletar dados alheios ou interromper serviços.
+      </aside>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    © <span id="year"></span> ANON CYBERSEC PRO —
+    <a href="index.html">← Voltar para a página inicial</a>
+  </div>
+</footer>
+
+<script>
+  const searchInput = document.getElementById("search");
+  const categorySelect = document.getElementById("category");
+  const cards = Array.from(document.querySelectorAll(".card"));
+  const count = document.getElementById("count");
+  const empty = document.getElementById("empty");
+
+  function filterCards() {
+    const query = searchInput.value.trim().toLocaleLowerCase("pt-BR");
+    const category = categorySelect.value;
+    let visible = 0;
+
+    cards.forEach((card) => {
+      const searchable =
+        (card.dataset.search + " " + card.innerText)
+          .toLocaleLowerCase("pt-BR");
+
+      const matchesText = searchable.includes(query);
+      const matchesCategory =
+        category === "all" || card.dataset.category === category;
+
+      const show = matchesText && matchesCategory;
+      card.hidden = !show;
+
+      if (show) visible++;
+    });
+
+    count.textContent =
+      `${visible} ${visible === 1 ? "recurso disponível" : "recursos disponíveis"}`;
+
+    empty.style.display = visible === 0 ? "block" : "none";
+  }
+
+  searchInput.addEventListener("input", filterCards);
+  categorySelect.addEventListener("change", filterCards);
+
+  document.getElementById("year").textContent =
+    new Date().getFullYear();
+
+  filterCards();
+</script>
+</body>
+</html>
