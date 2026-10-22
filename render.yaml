@@ -1,0 +1,27 @@
+databases:
+  - name: anon-cybersec-db
+    plan: free
+    databaseName: anoncybersec
+    user: anoncybersec
+
+services:
+  - type: web
+    name: anon-cybersec-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn server:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: anon-cybersec-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: ENVIRONMENT
+        value: production
+      - key: TOKEN_MINUTES
+        value: "60"
+      - key: CORS_ORIGINS
+        value: https://hackermesterio-blip.github.io

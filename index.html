@@ -1,243 +1,178 @@
-
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#080d16">
-<title>ANON CYBERSEC PRO</title>
+<title>ANON CYBERSEC PRO | Acesso seguro</title>
 <style>
-:root {
-  color-scheme: dark;
-  --bg:#080d16;
-  --panel:#101b2a;
-  --line:#263b52;
-  --text:#eaf4ff;
-  --muted:#9aadc3;
-  --cyan:#42dcff;
-  --green:#50e3a4;
-}
-* { box-sizing:border-box }
-body {
-  margin:0;
-  background:radial-gradient(ellipse at top,#12334a,var(--bg) 60%);
-  color:var(--text);
-  font:15px system-ui,Arial,sans-serif;
-}
-header {
-  padding:22px;
-  border-bottom:1px solid var(--line);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:15px;
-}
-h1 { margin:0;font-size:22px }
-h1 span { color:var(--cyan) }
-.status { color:var(--green);font-size:12px }
-main { max-width:1100px;margin:auto;padding:25px 16px }
-.intro { margin-bottom:25px }
-.intro h2 { font-size:clamp(26px,5vw,38px);margin:0 }
-.intro p,.muted { color:var(--muted);line-height:1.7 }
-.grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:16px;
-}
-.card {
-  background:linear-gradient(145deg,var(--panel),#0b1420);
-  border:1px solid var(--line);
-  border-radius:16px;
-  padding:20px;
-  min-width:0;
-}
-.card h3 { margin:0 0 8px }
-label { display:block;margin:15px 0 7px;color:var(--muted) }
-input,textarea {
-  width:100%;
-  border:1px solid var(--line);
-  background:#080f19;
-  color:var(--text);
-  border-radius:9px;
-  padding:12px;
-  font:inherit;
-}
-button {
-  border:0;
-  border-radius:9px;
-  padding:11px 14px;
-  font-weight:700;
-  cursor:pointer;
-}
-.run {
-  background:var(--cyan);
-  color:#06111b;
-  margin-top:13px;
-  width:100%;
-}
-.run:disabled { opacity:.55;cursor:wait }
-.output {
-  white-space:pre-wrap;
-  overflow-wrap:anywhere;
-  background:#050a10;
-  border:1px solid var(--line);
-  border-radius:10px;
-  padding:14px;
-  min-height:55px;
-  max-height:320px;
-  overflow:auto;
-  color:#9aeec8;
-  font:12px/1.7 ui-monospace,Consolas,monospace;
-}
-.wide { margin-top:18px }
-.notice {
-  border:1px solid #665128;
-  background:#211b10;
-  color:#f3d99b;
-  padding:13px;
-  border-radius:10px;
-  font-size:12px;
-  line-height:1.7;
-  margin-bottom:20px;
-}
-footer { text-align:center;color:var(--muted);padding:25px;font-size:12px }
+:root{color-scheme:dark;--bg:#080d16;--panel:#101b2a;--line:#263b52;--text:#eaf4ff;--muted:#9aadc3;--cyan:#42dcff;--green:#50e3a4;--red:#ff8787}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -10%,#12384f,var(--bg) 62%);color:var(--text);font:15px/1.5 system-ui,Segoe UI,Arial,sans-serif}button,input{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+header{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:20px max(18px,calc((100vw - 1120px)/2));border-bottom:1px solid var(--line);background:#080e17cc}.brand{display:flex;align-items:center;gap:12px;font-weight:850;letter-spacing:.5px}.logo{width:42px;height:42px;border:1px solid #2b6077;background:#123246;border-radius:13px;display:grid;place-items:center;color:var(--cyan);font-size:25px}.brand span,.accent{color:var(--cyan)}.status{color:var(--green);font-size:12px}
+main{max-width:1120px;margin:auto;padding:42px 18px}.layout{display:grid;grid-template-columns:1fr minmax(320px,420px);gap:34px;align-items:center}.eyebrow{font-size:10px;font-weight:800;letter-spacing:2px;color:var(--cyan)}h1{font-size:clamp(32px,5vw,52px);line-height:1.08;letter-spacing:-1.7px;margin:12px 0}h2{font-size:20px;margin:0 0 8px}.intro p,.muted{color:var(--muted);line-height:1.75}.feature-list{list-style:none;padding:0;margin:25px 0}.feature-list li{margin:12px 0;color:#c8d8e8}.feature-list li::before{content:"✓";color:var(--green);margin-right:10px}.panel{background:linear-gradient(145deg,var(--panel),#0b1420);border:1px solid var(--line);border-radius:20px;padding:25px;box-shadow:0 22px 65px #0004}.tabs{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:#080f19;border:1px solid var(--line);border-radius:11px;padding:5px;margin:20px 0}.tab{background:transparent;color:var(--muted);border:0;border-radius:8px;padding:10px;font-weight:750}.tab.active{background:#163044;color:var(--cyan)}label{display:block;margin:14px 0 6px;color:#bdcddd;font-size:12px}input{width:100%;padding:12px 13px;background:#080f19;color:var(--text);border:1px solid var(--line);border-radius:10px}input::placeholder{color:#63778e}.primary,.secondary{width:100%;border-radius:10px;padding:12px 14px;font-weight:800;margin-top:17px}.primary{border:0;color:#06111b;background:linear-gradient(100deg,var(--cyan),#83baff)}.secondary{border:1px solid var(--line);background:#142338;color:var(--text)}button:disabled{opacity:.55;cursor:wait}.message{display:none;padding:11px 12px;border-radius:9px;margin-top:14px;font-size:12px;overflow-wrap:anywhere}.message.show{display:block}.message.error{background:#30191e;border:1px solid #70333d;color:#ffb7b7}.message.success{background:#0b261d;border:1px solid #285e48;color:#a7f2cf}.fine{font-size:11px;color:var(--muted);margin-top:16px;line-height:1.6}.dashboard{display:none}.dashboard.show{display:block}.auth.hidden{display:none}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin:22px 0}.mini{border:1px solid var(--line);background:#0b1420;border-radius:13px;padding:16px}.mini strong{display:block;color:var(--cyan);font-size:14px}.mini span{font-size:12px;color:var(--muted)}.topline{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.logout{border:1px solid var(--line);background:#142338;color:var(--text);border-radius:9px;padding:9px 12px}.warning{font-size:11px;color:#ead49b;background:#211b10;border:1px solid #665128;border-radius:10px;padding:12px;line-height:1.7}footer{text-align:center;color:#71859d;font-size:11px;padding:24px 15px}
+@media(max-width:800px){.layout{grid-template-columns:1fr;gap:22px}.intro{padding:0 4px}.feature-list{margin:15px 0}.panel{padding:20px}.cards{grid-template-columns:1fr}}@media(max-width:430px){header{padding:14px}.brand{font-size:13px}.status{display:none}main{padding:25px 12px}}
 </style>
 </head>
 <body>
-<header>
-  <h1>⬡ ANON <span>CYBERSEC PRO</span></h1>
-  <span class="status" id="status">● Verificando backend</span>
-</header>
-
+<header><div class="brand"><div class="logo">⬡</div><div>ANON <span>CYBERSEC PRO</span><div class="muted" style="font-size:10px;letter-spacing:1.5px">SECURITY CENTER</div></div></div><div class="status" id="apiStatus">● Verificando API...</div></header>
 <main>
-  <section class="intro">
-    <p class="status">SECURITY OPERATIONS / 001</p>
-    <h2>Centro de <span style="color:var(--cyan)">segurança.</span></h2>
-    <p class="muted">Ferramentas defensivas com resultados fornecidos pelo servidor Python.</p>
-  </section>
-
-  <div class="notice">
-    Utilize somente domínios, serviços e arquivos próprios ou autorizados.
-    O painel precisa do servidor Python ligado para realizar as verificações.
-  </div>
-
-  <section class="grid">
-    <article class="card">
-      <h3>⌘ Consulta DNS</h3>
-      <p class="muted">Consulte os endereços IP associados a um domínio.</p>
-      <form data-api="dns">
-        <label for="dns">Domínio</label>
-        <input id="dns" name="domain" placeholder="example.com"
-          autocomplete="off" required>
-        <button class="run">Consultar DNS</button>
-      </form>
-    </article>
-
-    <article class="card">
-      <h3>◎ Cabeçalhos HTTP</h3>
-      <p class="muted">Confira os cabeçalhos de segurança de um site autorizado.</p>
-      <form data-api="headers">
-        <label for="url">URL HTTPS</label>
-        <input id="url" name="url" type="url"
-          placeholder="https://example.com" required>
-        <button class="run">Verificar cabeçalhos</button>
-      </form>
-    </article>
-
-    <article class="card">
-      <h3>♧ Certificado TLS</h3>
-      <p class="muted">Verifique a validade e os dados do certificado HTTPS.</p>
-      <form data-api="tls">
-        <label for="tls">Domínio</label>
-        <input id="tls" name="domain" placeholder="example.com"
-          autocomplete="off" required>
-        <button class="run">Verificar TLS</button>
-      </form>
-    </article>
-
-    <article class="card">
-      <h3>▤ Hash SHA-256</h3>
-      <p class="muted">Calcule o hash de um texto ou trecho de código local.</p>
-      <form data-api="hash">
-        <label for="content">Conteúdo</label>
-        <textarea id="content" name="content" rows="4"
-          placeholder="Cole o conteúdo para calcular o hash" required></textarea>
-        <button class="run">Calcular SHA-256</button>
-      </form>
-    </article>
-  </section>
-
-  <section class="card wide">
-    <h3>▸ Resultado da análise</h3>
-    <p class="muted" id="resultInfo">Aguardando uma solicitação.</p>
-    <pre class="output" id="output" aria-live="polite">[INFO] Inicie o servidor Python para começar.</pre>
-  </section>
+<div class="layout">
+<section class="intro">
+ <div class="eyebrow">SECURITY OPERATIONS · ACCESS PORTAL</div>
+ <h1>Segurança começa com <span class="accent">acesso controlado.</span></h1>
+ <p>Entre no seu painel de cibersegurança ou crie uma conta para começar a organizar suas atividades defensivas.</p>
+ <ul class="feature-list"><li>Cadastro e autenticação no backend</li><li>Senhas armazenadas com hash seguro</li><li>Token de sessão e área protegida</li><li>Preparado para publicar online</li></ul>
+ <div class="warning">Use uma senha única. Este projeto é uma base inicial; antes de abrir o cadastro ao público, considere verificação de e-mail, recuperação de senha, limites de tentativas e monitoramento.</div>
+</section>
+<section class="panel">
+ <div class="auth" id="authView">
+  <div class="eyebrow">MEMBER ACCESS</div><h2 id="formTitle">Acesse sua conta</h2><div class="muted" id="formSubtitle">Entre com suas credenciais.</div>
+  <div class="tabs"><button class="tab active" id="loginTab" type="button">Entrar</button><button class="tab" id="registerTab" type="button">Criar conta</button></div>
+  <form id="authForm">
+   <div id="nameField" hidden><label for="name">Nome de exibição</label><input id="name" name="name" maxlength="60" autocomplete="name" placeholder="Seu nome"></div>
+   <label for="email">E-mail</label><input id="email" name="email" type="email" maxlength="254" autocomplete="email" required placeholder="voce@exemplo.com">
+   <label for="password">Senha</label><input id="password" name="password" type="password" minlength="10" maxlength="128" autocomplete="current-password" required placeholder="Mínimo de 10 caracteres">
+   <div id="passwordHint" class="fine">Use pelo menos 10 caracteres.</div>
+   <button class="primary" id="submitBtn" type="submit">Entrar com segurança</button>
+  </form>
+  <div class="message" id="message" role="status" aria-live="polite"></div>
+  <div class="fine">Ao criar uma conta, você concorda em usar o serviço de forma responsável. Não use senhas de outros sites.</div>
+ </div>
+ <div class="dashboard" id="dashboard">
+  <div class="topline"><div><div class="eyebrow">AUTHENTICATED SESSION</div><h2>Bem-vindo(a)!</h2></div><button class="logout" id="logout">Sair</button></div>
+  <p class="muted" id="userSummary">Sessão autenticada.</p>
+  <div class="cards"><div class="mini"><strong>ATIVO</strong><span>Status da sessão</span></div><div class="mini"><strong>JWT</strong><span>Autenticação</span></div><div class="mini"><strong>PRO</strong><span>Workspace</span></div></div>
+  <h2>Área do usuário</h2><p class="muted">Sua conta está conectada ao backend. Este painel inicial pode ser ampliado com histórico, relatórios e ferramentas autorizadas.</p>
+  <button class="secondary" id="refreshProfile">Atualizar perfil</button>
+  <div class="message" id="dashMessage" role="status"></div>
+ </div>
+</section>
+</div>
 </main>
-
-<footer>ANON CYBERSEC PRO · Ferramentas de segurança defensiva</footer>
-
+<footer>ANON CYBERSEC PRO · Não publique segredos no frontend.</footer>
 <script>
-const statusEl = document.getElementById("status");
-const output = document.getElementById("output");
-const resultInfo = document.getElementById("resultInfo");
+/*
+  CONFIGURAÇÃO:
+  Defina API_BASE com a URL HTTPS do backend publicado no Render.
+  Exemplo: https://anon-cybersec-api.onrender.com
+*/
+const API_BASE = "https://COLOQUE-A-URL-DO-SEU-BACKEND.onrender.com";
+const TOKEN_KEY = "anon_cybersec_token";
+const $ = (selector) => document.querySelector(selector);
+let mode = "login";
 
-async function checkServer() {
+function showMessage(text, type="error", target="#message") {
+  const el = $(target);
+  el.textContent = text;
+  el.className = "message show " + type;
+}
+function clearMessage() {
+  $("#message").className = "message";
+  $("#message").textContent = "";
+}
+function apiUrl(path) {
+  if (API_BASE.includes("COLOQUE-A-URL")) {
+    throw new Error("Configure API_BASE no index.html com a URL HTTPS do backend publicado.");
+  }
+  return API_BASE.replace(/\/+$/, "") + path;
+}
+async function api(path, options={}) {
+  const token = sessionStorage.getItem(TOKEN_KEY);
+  const headers = {"Content-Type":"application/json", ...(options.headers || {})};
+  if (token) headers.Authorization = "Bearer " + token;
+  const response = await fetch(apiUrl(path), {...options, headers});
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) throw new Error(data.detail || data.error || "A solicitação falhou.");
+  return data;
+}
+function setMode(next) {
+  mode = next;
+  const registering = mode === "register";
+  $("#loginTab").classList.toggle("active", !registering);
+  $("#registerTab").classList.toggle("active", registering);
+  $("#nameField").hidden = !registering;
+  $("#name").required = registering;
+  $("#password").autocomplete = registering ? "new-password" : "current-password";
+  $("#formTitle").textContent = registering ? "Crie sua conta" : "Acesse sua conta";
+  $("#formSubtitle").textContent = registering ? "Preencha os campos para se cadastrar." : "Entre com suas credenciais.";
+  $("#submitBtn").textContent = registering ? "Criar conta segura" : "Entrar com segurança";
+  $("#passwordHint").textContent = registering ? "Mínimo de 10 caracteres; prefira uma frase-senha única." : "Digite a senha cadastrada.";
+  clearMessage();
+}
+function showAuth() {
+  $("#authView").classList.remove("hidden");
+  $("#dashboard").classList.remove("show");
+}
+function showDashboard(user) {
+  $("#authView").classList.add("hidden");
+  $("#dashboard").classList.add("show");
+  $("#userSummary").textContent = `${user.name} · ${user.email}`;
+}
+async function loadProfile() {
+  const token = sessionStorage.getItem(TOKEN_KEY);
+  if (!token) return showAuth();
   try {
-    const response = await fetch("/api/health");
-    if (!response.ok) throw new Error("Servidor indisponível");
-    const data = await response.json();
-    statusEl.textContent = data.ok
-      ? "● Backend conectado"
-      : "● Backend indisponível";
+    const data = await api("/api/auth/me");
+    showDashboard(data.user);
   } catch {
-    statusEl.textContent = "● Inicie o server.py";
+    sessionStorage.removeItem(TOKEN_KEY);
+    showAuth();
   }
 }
-
-document.querySelectorAll("form[data-api]").forEach(form => {
-  form.addEventListener("submit", async event => {
-    event.preventDefault();
-
-    const button = form.querySelector("button");
-    const api = form.dataset.api;
-    const payload = Object.fromEntries(new FormData(form).entries());
-
-    button.disabled = true;
-    button.textContent = "Processando...";
-    output.textContent = "[INFO] Enviando solicitação ao servidor...";
-    resultInfo.textContent = "Executando verificação...";
-
-    try {
-      const response = await fetch("/api/" + api, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-
-      const data = await response.json();
-
-      output.textContent = JSON.stringify(data, null, 2);
-      resultInfo.textContent = response.ok
-        ? "Verificação concluída."
-        : "Não foi possível concluir a verificação.";
-    } catch (error) {
-      output.textContent =
-        "Falha na comunicação com o backend.\n" +
-        "Confirme se server.py está ligado.\n" + error.message;
-      resultInfo.textContent = "Erro de conexão.";
-    } finally {
-      button.disabled = false;
-      button.textContent = ({
-        dns: "Consultar DNS",
-        headers: "Verificar cabeçalhos",
-        tls: "Verificar TLS",
-        hash: "Calcular SHA-256"
-      })[api];
-    }
-  });
+$("#loginTab").addEventListener("click", () => setMode("login"));
+$("#registerTab").addEventListener("click", () => setMode("register"));
+$("#authForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  clearMessage();
+  const btn = $("#submitBtn");
+  btn.disabled = true;
+  btn.textContent = "Aguarde...";
+  const payload = {
+    email: $("#email").value.trim(),
+    password: $("#password").value
+  };
+  if (mode === "register") payload.name = $("#name").value.trim();
+  try {
+    const data = await api(mode === "register" ? "/api/auth/register" : "/api/auth/login", {
+      method: "POST",
+      body: JSON.stringify(payload)
+    });
+    sessionStorage.setItem(TOKEN_KEY, data.access_token);
+    showDashboard(data.user);
+    $("#password").value = "";
+    showMessage(mode === "register" ? "Conta criada com sucesso." : "Login realizado com sucesso.", "success", "#dashMessage");
+  } catch (error) {
+    showMessage(error.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = mode === "register" ? "Criar conta segura" : "Entrar com segurança";
+  }
 });
-
-checkServer();
+$("#logout").addEventListener("click", () => {
+  sessionStorage.removeItem(TOKEN_KEY);
+  $("#authForm").reset();
+  setMode("login");
+  showAuth();
+  showMessage("Você saiu da sua conta.", "success");
+});
+$("#refreshProfile").addEventListener("click", async () => {
+  try {
+    const data = await api("/api/auth/me");
+    showDashboard(data.user);
+    showMessage("Perfil atualizado.", "success", "#dashMessage");
+  } catch (error) {
+    showMessage(error.message, "error", "#dashMessage");
+  }
+});
+(async () => {
+  try {
+    const health = await api("/api/health");
+    $("#apiStatus").textContent = health.ok ? "● API online" : "● API indisponível";
+  } catch {
+    $("#apiStatus").textContent = "● Configure a API";
+  }
+  await loadProfile();
+})();
 </script>
 </body>
 </html>
