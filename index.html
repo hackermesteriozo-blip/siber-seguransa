@@ -3,1219 +3,241 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#080d16">
-<meta name="description" content="ANON CYBERSEC PRO - Painel de segurança defensiva">
-<title>ANON CYBERSEC PRO | Security Center</title>
-
+<title>ANON CYBERSEC PRO</title>
 <style>
 :root {
-  --bg: #080d16;
-  --panel: #101a28;
-  --panel2: #0b1420;
-  --line: #22354b;
-  --text: #eaf2fc;
-  --muted: #91a5bd;
-  --cyan: #43dcff;
-  --green: #50e3a4;
+  color-scheme: dark;
+  --bg:#080d16;
+  --panel:#101b2a;
+  --line:#263b52;
+  --text:#eaf4ff;
+  --muted:#9aadc3;
+  --cyan:#42dcff;
+  --green:#50e3a4;
 }
-
-* {
-  box-sizing: border-box;
-}
-
+* { box-sizing:border-box }
 body {
-  margin: 0;
-  background:
-    radial-gradient(ellipse at 70% -10%, #103c5055, transparent 45%),
-    var(--bg);
-  color: var(--text);
-  font: 14px/1.5 Inter, system-ui, Arial, sans-serif;
+  margin:0;
+  background:radial-gradient(ellipse at top,#12334a,var(--bg) 60%);
+  color:var(--text);
+  font:15px system-ui,Arial,sans-serif;
 }
-
-button, input {
-  font: inherit;
+header {
+  padding:22px;
+  border-bottom:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
 }
-
-button {
-  cursor: pointer;
+h1 { margin:0;font-size:22px }
+h1 span { color:var(--cyan) }
+.status { color:var(--green);font-size:12px }
+main { max-width:1100px;margin:auto;padding:25px 16px }
+.intro { margin-bottom:25px }
+.intro h2 { font-size:clamp(26px,5vw,38px);margin:0 }
+.intro p,.muted { color:var(--muted);line-height:1.7 }
+.grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:16px;
 }
-
-button:focus-visible,
-input:focus-visible {
-  outline: 2px solid var(--cyan);
-  outline-offset: 3px;
-}
-
-.app {
-  min-height: 100vh;
-  display: grid;
-  grid-template-columns: 245px minmax(0, 1fr);
-}
-
-aside {
-  height: 100vh;
-  position: sticky;
-  top: 0;
-  background: #0a111c;
-  border-right: 1px solid var(--line);
-  padding: 23px 15px;
-  display: flex;
-  flex-direction: column;
-  z-index: 10;
-}
-
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 11px;
-  padding: 0 8px 28px;
-}
-
-.logo {
-  width: 43px;
-  height: 43px;
-  display: grid;
-  place-items: center;
-  border-radius: 14px;
-  background: #123246;
-  border: 1px solid #2b6077;
-  color: var(--cyan);
-  font-size: 25px;
-}
-
-.brand strong {
-  letter-spacing: .7px;
-}
-
-.brand strong span,
-.gradient {
-  color: var(--cyan);
-}
-
-.sub {
-  font-size: 10px;
-  letter-spacing: 1.6px;
-  color: var(--muted);
-}
-
-.navlabel {
-  font-size: 10px;
-  letter-spacing: 1.8px;
-  color: #71859d;
-  padding: 13px 12px 7px;
-}
-
-.nav {
-  width: 100%;
-  display: flex;
-  gap: 12px;
-  align-items: center;
-  text-align: left;
-  background: transparent;
-  border: 1px solid transparent;
-  color: #a5b5c8;
-  border-radius: 10px;
-  padding: 11px 12px;
-  margin: 3px 0;
-}
-
-.nav:hover,
-.nav.active {
-  color: var(--cyan);
-  background: #122536;
-  border-color: #25485c;
-}
-
-.nav.active {
-  box-shadow: inset 3px 0 var(--cyan);
-}
-
-.sidebottom {
-  margin-top: auto;
-  border: 1px solid #254b3c;
-  background: #0b211b;
-  border-radius: 12px;
-  padding: 13px;
-  color: var(--green);
-  font-size: 12px;
-}
-
-.sidebottom small {
-  display: block;
-  color: #9ac3b3;
-  margin-top: 5px;
-}
-
-main {
-  min-width: 0;
-}
-
-.topbar {
-  height: 72px;
-  position: sticky;
-  top: 0;
-  z-index: 5;
-  background: #080e17ef;
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--line);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 28px;
-}
-
-.muted {
-  color: var(--muted);
-}
-
-.pill {
-  border: 1px solid #28513f;
-  background: #0b211b;
-  border-radius: 99px;
-  color: var(--green);
-  padding: 7px 11px;
-  font-size: 11px;
-}
-
-.clock {
-  color: var(--muted);
-  font-size: 12px;
-  font-variant-numeric: tabular-nums;
-}
-
-.mobile {
-  display: none;
-}
-
-.content {
-  max-width: 1500px;
-  margin: auto;
-  padding: 30px;
-}
-
-.page {
-  display: none;
-  animation: fade .2s;
-}
-
-.page.active {
-  display: block;
-}
-
-@keyframes fade {
-  from {
-    opacity: .4;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-.eyebrow {
-  color: var(--cyan);
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 2px;
-  margin-bottom: 10px;
-}
-
-h1 {
-  font-size: clamp(27px, 3vw, 39px);
-  letter-spacing: -1px;
-  line-height: 1.15;
-  margin: 0;
-}
-
-.lead {
-  color: var(--muted);
-  max-width: 680px;
-  margin: 12px 0 0;
-  font-size: 13px;
-}
-
-.hero {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 20px;
-  margin-bottom: 25px;
-}
-
-.btn {
-  border-radius: 10px;
-  padding: 10px 14px;
-  font-weight: 750;
-  font-size: 12px;
-  border: 1px solid transparent;
-}
-
-.primary {
-  color: #06111a;
-  background: linear-gradient(100deg, #43dcff, #7dbaff);
-  box-shadow: 0 7px 22px #43dcff18;
-}
-
-.quiet {
-  color: var(--text);
-  background: #142133;
-  border-color: var(--line);
-}
-
-.btn:hover,
-.smallbtn:hover {
-  filter: brightness(1.12);
-}
-
-.metrics {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 13px;
-  margin-bottom: 20px;
-}
-
-.card,
-.tool {
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  background: linear-gradient(145deg, var(--panel), var(--panel2));
-  box-shadow: 0 15px 45px #0003;
-}
-
-.metric {
-  padding: 18px;
-}
-
-.metriclabel {
-  display: flex;
-  justify-content: space-between;
-  color: var(--muted);
-  font-size: 11px;
-}
-
-.metricicon {
-  color: var(--cyan);
-  background: #153044;
-  border-radius: 9px;
-  padding: 6px 9px;
-}
-
-.value {
-  font-size: 29px;
-  font-weight: 850;
-  letter-spacing: -1px;
-  margin: 12px 0 2px;
-}
-
-.note {
-  color: var(--muted);
-  font-size: 11px;
-}
-
-.columns {
-  display: grid;
-  grid-template-columns: minmax(0, 1.45fr) minmax(270px, .75fr);
-  gap: 16px;
-  align-items: start;
-}
-
 .card {
-  padding: 19px;
+  background:linear-gradient(145deg,var(--panel),#0b1420);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:20px;
+  min-width:0;
 }
-
-.head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 17px;
+.card h3 { margin:0 0 8px }
+label { display:block;margin:15px 0 7px;color:var(--muted) }
+input,textarea {
+  width:100%;
+  border:1px solid var(--line);
+  background:#080f19;
+  color:var(--text);
+  border-radius:9px;
+  padding:12px;
+  font:inherit;
 }
-
-.head h2 {
-  font-size: 15px;
-  margin: 0;
+button {
+  border:0;
+  border-radius:9px;
+  padding:11px 14px;
+  font-weight:700;
+  cursor:pointer;
 }
-
-.tag {
-  font-size: 10px;
-  color: var(--cyan);
-  border: 1px solid #25485c;
-  background: #122536;
-  border-radius: 7px;
-  padding: 5px 8px;
+.run {
+  background:var(--cyan);
+  color:#06111b;
+  margin-top:13px;
+  width:100%;
 }
-
-.tools {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+.run:disabled { opacity:.55;cursor:wait }
+.output {
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  background:#050a10;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:14px;
+  min-height:55px;
+  max-height:320px;
+  overflow:auto;
+  color:#9aeec8;
+  font:12px/1.7 ui-monospace,Consolas,monospace;
 }
-
-.tool {
-  padding: 16px;
-  box-shadow: none;
-  transition: .18s;
-}
-
-.tool:hover {
-  transform: translateY(-2px);
-  border-color: #39728a;
-}
-
-.tool[hidden] {
-  display: none;
-}
-
-.toolicon {
-  width: 40px;
-  height: 40px;
-  display: grid;
-  place-items: center;
-  border-radius: 12px;
-  background: #143044;
-  border: 1px solid #244a60;
-  color: var(--cyan);
-  font-size: 20px;
-  margin-bottom: 12px;
-}
-
-.tool h3 {
-  font-size: 14px;
-  margin: 0 0 6px;
-}
-
-.tool p {
-  font-size: 11px;
-  color: var(--muted);
-  min-height: 36px;
-  margin: 0 0 13px;
-}
-
-.toolfoot {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-}
-
-.available {
-  font-size: 10px;
-  color: var(--green);
-}
-
-.smallbtn {
-  border: 1px solid #2b425a;
-  border-radius: 8px;
-  padding: 7px 9px;
-  background: #142338;
-  color: var(--text);
-  font-size: 11px;
-  font-weight: 700;
-}
-
-.activity {
-  display: flex;
-  gap: 10px;
-  padding: 12px 0;
-  border-bottom: 1px solid #203047;
-}
-
-.activity:last-child {
-  border: 0;
-}
-
-.activityicon {
-  height: 30px;
-  width: 30px;
-  flex-shrink: 0;
-  display: grid;
-  place-items: center;
-  border-radius: 9px;
-  background: #153044;
-  color: var(--cyan);
-}
-
-.activity strong {
-  display: block;
-  font-size: 12px;
-}
-
-.activity small {
-  display: block;
-  color: var(--muted);
-  font-size: 10px;
-  overflow-wrap: anywhere;
-  margin-top: 3px;
-}
-
-.activity time {
-  margin-left: auto;
-  color: var(--muted);
-  font-size: 10px;
-  white-space: nowrap;
-}
-
-.empty {
-  font-size: 12px;
-  color: var(--muted);
-  padding: 14px 0;
-}
-
-.terminal {
-  margin-top: 16px;
-  background: #050a10;
-  border: 1px solid var(--line);
-  border-radius: 13px;
-  overflow: hidden;
-}
-
-.termhead {
-  padding: 11px 14px;
-  background: #0e1723;
-  border-bottom: 1px solid var(--line);
-  font-size: 10px;
-  color: var(--muted);
-  letter-spacing: 1px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.term {
-  padding: 15px;
-  min-height: 115px;
-  max-height: 200px;
-  overflow: auto;
-  white-space: pre-wrap;
-  overflow-wrap: anywhere;
-  color: #75e9b5;
-  font: 11px/1.9 ui-monospace, Consolas, monospace;
-}
-
+.wide { margin-top:18px }
 .notice {
-  margin-top: 16px;
-  padding: 13px 14px;
-  border: 1px solid #5a4826;
-  background: #211b11;
-  color: #e8ce91;
-  border-radius: 11px;
-  font-size: 11px;
-  line-height: 1.7;
+  border:1px solid #665128;
+  background:#211b10;
+  color:#f3d99b;
+  padding:13px;
+  border-radius:10px;
+  font-size:12px;
+  line-height:1.7;
+  margin-bottom:20px;
 }
-
-.sectionintro {
-  margin-bottom: 23px;
-}
-
-.sectionintro p {
-  color: var(--muted);
-  font-size: 13px;
-}
-
-.search {
-  min-width: 200px;
-  flex: 1;
-  padding: 11px 12px;
-  border: 1px solid var(--line);
-  background: #0b1420;
-  border-radius: 10px;
-  color: var(--text);
-}
-
-.toolbar {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 15px;
-  flex-wrap: wrap;
-}
-
-.reportrow {
-  display: flex;
-  justify-content: space-between;
-  gap: 15px;
-  padding: 12px 0;
-  border-bottom: 1px solid var(--line);
-  font-size: 12px;
-}
-
-.reportrow:last-child {
-  border: 0;
-}
-
-.reportrow small {
-  display: block;
-  color: var(--muted);
-  margin-top: 4px;
-}
-
-.aboutgrid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-}
-
-.aboutgrid p {
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.8;
-}
-
-footer {
-  text-align: center;
-  padding: 25px 0 5px;
-  color: #6f839a;
-  font-size: 10px;
-}
-
-.toast {
-  position: fixed;
-  right: 20px;
-  bottom: 20px;
-  z-index: 50;
-  display: none;
-  max-width: 360px;
-  background: #122638;
-  border: 1px solid #32647b;
-  border-radius: 11px;
-  padding: 12px 15px;
-  box-shadow: 0 10px 40px #0008;
-  font-size: 12px;
-}
-
-.toast.show {
-  display: block;
-}
-
-@media (max-width: 1100px) {
-  .metrics {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .columns {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 740px) {
-  .app {
-    grid-template-columns: 1fr;
-  }
-
-  aside {
-    position: fixed;
-    width: 260px;
-    transform: translateX(-110%);
-    transition: transform .2s;
-    box-shadow: 0 20px 60px #0009;
-  }
-
-  aside.open {
-    transform: translateX(0);
-  }
-
-  .mobile {
-    display: inline-grid;
-  }
-
-  .topbar {
-    height: 64px;
-    padding: 0 14px;
-  }
-
-  .content {
-    padding: 22px 14px;
-  }
-
-  .hero {
-    flex-direction: column;
-  }
-
-  .hero .btn {
-    width: 100%;
-  }
-
-  .tools,
-  .aboutgrid {
-    grid-template-columns: 1fr;
-  }
-
-  .metric {
-    padding: 14px;
-  }
-
-  .value {
-    font-size: 24px;
-  }
-
-  .clock {
-    display: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation: none !important;
-    transition: none !important;
-    scroll-behavior: auto !important;
-  }
-}
+footer { text-align:center;color:var(--muted);padding:25px;font-size:12px }
 </style>
 </head>
-
 <body>
-<div class="app">
-
-<aside id="sidebar">
-  <div class="brand">
-    <div class="logo">⬡</div>
-    <div>
-      <strong>ANON <span>CYBERSEC</span></strong>
-      <div class="sub">SECURITY CENTER</div>
-    </div>
-  </div>
-
-  <div class="navlabel">WORKSPACE</div>
-  <button class="nav active" data-page="dashboard">▦ &nbsp; Visão geral</button>
-  <button class="nav" data-page="tools">⌘ &nbsp; Ferramentas</button>
-  <button class="nav" data-page="reports">
-    ▤ &nbsp; Relatórios <span id="navCount" style="margin-left:auto">0</span>
-  </button>
-
-  <div class="navlabel">INFORMAÇÕES</div>
-  <button class="nav" data-page="about">ⓘ &nbsp; Sobre o projeto</button>
-
-  <div class="sidebottom">
-    ● &nbsp; Modo defensivo
-    <small>Use apenas sistemas próprios ou autorizados.</small>
-  </div>
-</aside>
-
-<main>
-<header class="topbar">
-  <div style="display:flex;align-items:center;gap:12px">
-    <button class="btn quiet mobile" id="menu">☰</button>
-    <span class="muted">Workspace /</span>
-    <strong id="crumb">Visão geral</strong>
-  </div>
-  <div style="display:flex;align-items:center;gap:13px">
-    <span class="pill">● Interface ativa</span>
-    <span class="clock" id="clock"></span>
-  </div>
+<header>
+  <h1>⬡ ANON <span>CYBERSEC PRO</span></h1>
+  <span class="status" id="status">● Verificando backend</span>
 </header>
 
-<div class="content">
+<main>
+  <section class="intro">
+    <p class="status">SECURITY OPERATIONS / 001</p>
+    <h2>Centro de <span style="color:var(--cyan)">segurança.</span></h2>
+    <p class="muted">Ferramentas defensivas com resultados fornecidos pelo servidor Python.</p>
+  </section>
 
-<section class="page active" id="page-dashboard">
-  <div class="hero">
-    <div>
-      <div class="eyebrow">SECURITY OPERATIONS · 001</div>
-      <h1>Seu centro de <span class="gradient">cibersegurança.</span></h1>
-      <p class="lead">
-        Ferramentas defensivas, atividades organizadas e relatórios
-        em uma interface moderna e responsiva.
-      </p>
-    </div>
-    <button class="btn primary" id="newActivity">＋ Nova atividade</button>
+  <div class="notice">
+    Utilize somente domínios, serviços e arquivos próprios ou autorizados.
+    O painel precisa do servidor Python ligado para realizar as verificações.
   </div>
 
-  <div class="metrics">
-    <div class="card metric">
-      <div class="metriclabel">FERRAMENTAS <span class="metricicon">⌘</span></div>
-      <div class="value">05</div>
-      <div class="note">Módulos de auditoria</div>
-    </div>
+  <section class="grid">
+    <article class="card">
+      <h3>⌘ Consulta DNS</h3>
+      <p class="muted">Consulte os endereços IP associados a um domínio.</p>
+      <form data-api="dns">
+        <label for="dns">Domínio</label>
+        <input id="dns" name="domain" placeholder="example.com"
+          autocomplete="off" required>
+        <button class="run">Consultar DNS</button>
+      </form>
+    </article>
 
-    <div class="card metric">
-      <div class="metriclabel">ATIVIDADES <span class="metricicon">↗</span></div>
-      <div class="value" id="checks">00</div>
-      <div class="note">Nesta sessão</div>
-    </div>
+    <article class="card">
+      <h3>◎ Cabeçalhos HTTP</h3>
+      <p class="muted">Confira os cabeçalhos de segurança de um site autorizado.</p>
+      <form data-api="headers">
+        <label for="url">URL HTTPS</label>
+        <input id="url" name="url" type="url"
+          placeholder="https://example.com" required>
+        <button class="run">Verificar cabeçalhos</button>
+      </form>
+    </article>
 
-    <div class="card metric">
-      <div class="metriclabel">RELATÓRIOS <span class="metricicon">▤</span></div>
-      <div class="value" id="reportCount">00</div>
-      <div class="note">Registros exportáveis</div>
-    </div>
+    <article class="card">
+      <h3>♧ Certificado TLS</h3>
+      <p class="muted">Verifique a validade e os dados do certificado HTTPS.</p>
+      <form data-api="tls">
+        <label for="tls">Domínio</label>
+        <input id="tls" name="domain" placeholder="example.com"
+          autocomplete="off" required>
+        <button class="run">Verificar TLS</button>
+      </form>
+    </article>
 
-    <div class="card metric">
-      <div class="metriclabel">ESTADO <span class="metricicon">✓</span></div>
-      <div class="value" style="font-size:22px;color:var(--green)">PRONTO</div>
-      <div class="note">Interface carregada</div>
-    </div>
-  </div>
+    <article class="card">
+      <h3>▤ Hash SHA-256</h3>
+      <p class="muted">Calcule o hash de um texto ou trecho de código local.</p>
+      <form data-api="hash">
+        <label for="content">Conteúdo</label>
+        <textarea id="content" name="content" rows="4"
+          placeholder="Cole o conteúdo para calcular o hash" required></textarea>
+        <button class="run">Calcular SHA-256</button>
+      </form>
+    </article>
+  </section>
 
-  <div class="columns">
-    <div class="card">
-      <div class="head">
-        <div>
-          <h2>Ferramentas disponíveis</h2>
-          <div class="note">Selecione um módulo para começar</div>
-        </div>
-        <span class="tag">V 2.0</span>
-      </div>
-
-      <div class="tools" id="toolGrid">
-
-        <article class="tool" data-search="dns domínio rede resolução">
-          <div class="toolicon">⌘</div>
-          <h3>Consulta DNS</h3>
-          <p>Prepare uma consulta de resolução de domínio para executar no Python.</p>
-          <div class="toolfoot">
-            <span class="available">● Disponível</span>
-            <button class="smallbtn" data-tool="dns">Abrir ↗</button>
-          </div>
-        </article>
-
-        <article class="tool" data-search="http web cabeçalho site segurança">
-          <div class="toolicon">◎</div>
-          <h3>Cabeçalhos HTTP</h3>
-          <p>Registre uma URL para análise de cabeçalhos de segurança web.</p>
-          <div class="toolfoot">
-            <span class="available">● Disponível</span>
-            <button class="smallbtn" data-tool="http">Abrir ↗</button>
-          </div>
-        </article>
-
-        <article class="tool" data-search="tls ssl certificado https domínio">
-          <div class="toolicon">♧</div>
-          <h3>Certificado TLS</h3>
-          <p>Prepare a verificação de certificado HTTPS de um domínio autorizado.</p>
-          <div class="toolfoot">
-            <span class="available">● Disponível</span>
-            <button class="smallbtn" data-tool="tls">Abrir ↗</button>
-          </div>
-        </article>
-
-        <article class="tool" data-search="arquivo sha256 hash integridade local">
-          <div class="toolicon">▤</div>
-          <h3>Integridade de arquivos</h3>
-          <p>Calcule SHA-256 e metadados usando o programa Python local.</p>
-          <div class="toolfoot">
-            <span class="available">● Disponível</span>
-            <button class="smallbtn" data-tool="hash">Abrir ↗</button>
-          </div>
-        </article>
-
-        <article class="tool" data-search="tcp porta portas rede firewall autorizado">
-          <div class="toolicon">⇄</div>
-          <h3>Verificação TCP</h3>
-          <p>Organize um teste limitado em equipamentos autorizados.</p>
-          <div class="toolfoot">
-            <span class="available">● Limitado</span>
-            <button class="smallbtn" data-tool="ports">Abrir ↗</button>
-          </div>
-        </article>
-
-        <article class="tool">
-          <div class="toolicon">⇩</div>
-          <h3>Exportar relatório</h3>
-          <p>Baixe o histórico desta interface como arquivo JSON.</p>
-          <div class="toolfoot">
-            <span class="available">● Local</span>
-            <button class="smallbtn" id="exportQuick">Exportar ↓</button>
-          </div>
-        </article>
-
-      </div>
-
-      <div class="terminal">
-        <div class="termhead">
-          <span>▸ TERMINAL DE ATIVIDADE</span>
-          <span id="termStatus">PRONTO</span>
-        </div>
-        <div class="term" id="terminal" role="log" aria-live="polite">[OK] ANON CYBERSEC PRO iniciado.
-[INFO] Interface pronta para uso.
-[INFO] Análises técnicas reais exigem o programa Python ou um backend seguro.</div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="head">
-        <div>
-          <h2>Atividade recente</h2>
-          <div class="note">Histórico desta sessão</div>
-        </div>
-        <button class="smallbtn" id="clear">Limpar</button>
-      </div>
-
-      <div id="activity">
-        <div class="empty">Nenhuma atividade registrada ainda.</div>
-      </div>
-
-      <div class="notice">
-        ⚠ <strong>Uso responsável:</strong> esta página é uma interface
-        estática. Não executa varreduras reais nem acessa arquivos do
-        computador. Audite somente sistemas próprios ou autorizados.
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="page" id="page-tools">
-  <div class="sectionintro">
-    <div class="eyebrow">TOOLKIT · 002</div>
-    <h1>Ferramentas de <span class="gradient">auditoria.</span></h1>
-    <p>Pesquise um módulo defensivo.</p>
-  </div>
-
-  <div class="toolbar">
-    <input class="search" id="search" type="search"
-      placeholder="Pesquisar ferramentas..." aria-label="Pesquisar ferramentas">
-    <button class="btn quiet" id="clearSearch">Limpar busca</button>
-  </div>
-
-  <div class="tools" id="toolsCopy"></div>
-</section>
-
-<section class="page" id="page-reports">
-  <div class="sectionintro">
-    <div class="eyebrow">REGISTROS · 003</div>
-    <h1>Seus <span class="gradient">relatórios.</span></h1>
-    <p>Exporte o histórico desta sessão em formato JSON.</p>
-  </div>
-
-  <div class="toolbar">
-    <button class="btn primary" id="export">⇩ Exportar JSON</button>
-    <button class="btn quiet" id="clearReports">Limpar histórico</button>
-  </div>
-
-  <div class="card" id="reportBox">
-    <div class="empty">Nenhum registro para exibir.</div>
-  </div>
-</section>
-
-<section class="page" id="page-about">
-  <div class="sectionintro">
-    <div class="eyebrow">PROJETO · 004</div>
-    <h1>Sobre o <span class="gradient">ANON CYBERSEC.</span></h1>
-    <p>Uma base visual para organizar rotinas de segurança defensiva.</p>
-  </div>
-
-  <div class="aboutgrid">
-    <div class="card">
-      <div class="toolicon">⬡</div>
-      <h3>Objetivo</h3>
-      <p>Organizar verificações defensivas, documentar atividades e apoiar
-      o aprendizado responsável de cibersegurança.</p>
-    </div>
-
-    <div class="card">
-      <div class="toolicon">⚙</div>
-      <h3>Arquitetura</h3>
-      <p>O site é HTML, CSS e JavaScript estáticos. Verificações reais
-      exigem backend seguro com autenticação e autorização.</p>
-    </div>
-
-    <div class="card">
-      <div class="toolicon">▤</div>
-      <h3>Relatórios</h3>
-      <p>Os registros ficam na memória durante a sessão e podem ser
-      exportados em JSON. Não substituem relatórios técnicos do Python.</p>
-    </div>
-
-    <div class="card">
-      <div class="toolicon">♡</div>
-      <h3>Segurança por padrão</h3>
-      <p>Não coloque senhas ou tokens no HTML público. Não exponha
-      endpoints que executem comandos arbitrários.</p>
-    </div>
-  </div>
-</section>
-
-<footer>ANON CYBERSEC PRO · SECURITY CENTER · 2026</footer>
-</div>
+  <section class="card wide">
+    <h3>▸ Resultado da análise</h3>
+    <p class="muted" id="resultInfo">Aguardando uma solicitação.</p>
+    <pre class="output" id="output" aria-live="polite">[INFO] Inicie o servidor Python para começar.</pre>
+  </section>
 </main>
-</div>
 
-<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<footer>ANON CYBERSEC PRO · Ferramentas de segurança defensiva</footer>
 
 <script>
-(() => {
-  const $ = s => document.querySelector(s);
-  const $$ = s => [...document.querySelectorAll(s)];
+const statusEl = document.getElementById("status");
+const output = document.getElementById("output");
+const resultInfo = document.getElementById("resultInfo");
 
-  const data = [];
-  let count = 0;
-  let timer;
-
-  function toast(message) {
-    const element = $("#toast");
-    element.textContent = message;
-    element.classList.add("show");
-
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      element.classList.remove("show");
-    }, 3000);
+async function checkServer() {
+  try {
+    const response = await fetch("/api/health");
+    if (!response.ok) throw new Error("Servidor indisponível");
+    const data = await response.json();
+    statusEl.textContent = data.ok
+      ? "● Backend conectado"
+      : "● Backend indisponível";
+  } catch {
+    statusEl.textContent = "● Inicie o server.py";
   }
+}
 
-  function log(message) {
-    const element = document.createElement("div");
-    element.textContent = message;
-    $("#terminal").appendChild(element);
-    $("#terminal").scrollTop = $("#terminal").scrollHeight;
-  }
+document.querySelectorAll("form[data-api]").forEach(form => {
+  form.addEventListener("submit", async event => {
+    event.preventDefault();
 
-  function escapeHTML(value) {
-    return String(value).replace(/[&<>"']/g, character => ({
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#39;"
-    })[character]);
-  }
+    const button = form.querySelector("button");
+    const api = form.dataset.api;
+    const payload = Object.fromEntries(new FormData(form).entries());
 
-  function render() {
-    $("#checks").textContent = String(count).padStart(2, "0");
-    $("#reportCount").textContent = String(data.length).padStart(2, "0");
-    $("#navCount").textContent = data.length;
+    button.disabled = true;
+    button.textContent = "Processando...";
+    output.textContent = "[INFO] Enviando solicitação ao servidor...";
+    resultInfo.textContent = "Executando verificação...";
 
-    $("#activity").innerHTML = data.length
-      ? data.slice(0, 7).map(item => `
-        <div class="activity">
-          <div class="activityicon">✓</div>
-          <div style="flex:1;min-width:0">
-            <strong>${escapeHTML(item.action)}</strong>
-            <small>${escapeHTML(item.target)}</small>
-          </div>
-          <time>${new Date(item.time).toLocaleTimeString("pt-BR", {
-            hour: "2-digit",
-            minute: "2-digit"
-          })}</time>
-        </div>
-      `).join("")
-      : '<div class="empty">Nenhuma atividade registrada ainda.</div>';
-
-    $("#reportBox").innerHTML = data.length
-      ? data.map(item => `
-        <div class="reportrow">
-          <div>
-            <strong>${escapeHTML(item.action)}</strong>
-            <small>${escapeHTML(item.target)}</small>
-          </div>
-          <span class="muted">
-            ${new Date(item.time).toLocaleString("pt-BR")}
-          </span>
-        </div>
-      `).join("")
-      : '<div class="empty">Nenhum registro para exibir.</div>';
-  }
-
-  function record(action, target) {
-    data.unshift({
-      action,
-      target,
-      time: new Date().toISOString()
-    });
-
-    count++;
-    render();
-  }
-
-  function page(name) {
-    $$(".page").forEach(element => {
-      element.classList.toggle("active", element.id === "page-" + name);
-    });
-
-    $$(".nav[data-page]").forEach(button => {
-      button.classList.toggle("active", button.dataset.page === name);
-    });
-
-    $("#crumb").textContent =
-      $(`.nav[data-page="${name}"]`).textContent.trim();
-
-    $("#sidebar").classList.remove("open");
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
-  $$(".nav[data-page]").forEach(button => {
-    button.addEventListener("click", () => page(button.dataset.page));
-  });
-
-  $("#menu").addEventListener("click", () => {
-    $("#sidebar").classList.toggle("open");
-  });
-
-  $("#newActivity").addEventListener("click", () => {
-    page("tools");
-    $("#search").focus();
-  });
-
-  $("#clear").addEventListener("click", () => {
-    if (!data.length) {
-      return toast("O histórico já está vazio.");
-    }
-
-    if (!confirm("Apagar o histórico desta sessão?")) return;
-
-    data.length = 0;
-    count = 0;
-
-    render();
-    log("[INFO] Histórico limpo.");
-    toast("Histórico limpo.");
-  });
-
-  $("#clearReports").addEventListener("click", () => {
-    $("#clear").click();
-  });
-
-  function validDomain(value) {
     try {
-      const url = new URL(
-        value.includes("://") ? value : "https://" + value
-      );
+      const response = await fetch("/api/" + api, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
 
-      return Boolean(url.hostname) &&
-        !url.username && !url.password;
-    } catch {
-      return false;
-    }
-  }
+      const data = await response.json();
 
-  function runTool(type) {
-    const tools = {
-      dns: [
-        "Consulta DNS",
-        "Domínio para consulta DNS:"
-      ],
-      http: [
-        "Cabeçalhos HTTP",
-        "URL completa (https://example.com):"
-      ],
-      tls: [
-        "Certificado TLS",
-        "Domínio autorizado para verificar TLS:"
-      ],
-      hash: [
-        "Integridade de arquivo",
-        "Caminho do arquivo para usar no Python:"
-      ],
-      ports: [
-        "Verificação TCP limitada",
-        "Host próprio/autorizado para preparar a análise:"
-      ]
-    };
-
-    const config = tools[type];
-    if (!config) return;
-
-    const answer = prompt(config[1]);
-
-    if (answer === null || !answer.trim()) return;
-
-    const target = answer.trim();
-
-    if (["dns", "tls", "ports"].includes(type) &&
-        !validDomain(target) &&
-        !/^[\d.:a-f]+$/i.test(target)) {
-      return toast("Informe domínio ou IP válido.");
-    }
-
-    if (type === "http") {
-      try {
-        const url = new URL(target);
-
-        if (
-          !["http:", "https:"].includes(url.protocol) ||
-          url.username ||
-          url.password
-        ) {
-          throw new Error("URL inválida");
-        }
-      } catch {
-        return toast("Informe URL HTTP ou HTTPS válida.");
-      }
-    }
-
-    record(config[0], target);
-
-    log("[ATIVIDADE] " + config[0] + " — " + target);
-    log("[INFO] Registro criado. Execute a análise real no Python.");
-
-    $("#termStatus").textContent = "REGISTRO CRIADO";
-
-    toast("Atividade registrada. A análise real exige Python/backend.");
-  }
-
-  document.addEventListener("click", event => {
-    const button = event.target.closest("[data-tool]");
-
-    if (button) {
-      runTool(button.dataset.tool);
+      output.textContent = JSON.stringify(data, null, 2);
+      resultInfo.textContent = response.ok
+        ? "Verificação concluída."
+        : "Não foi possível concluir a verificação.";
+    } catch (error) {
+      output.textContent =
+        "Falha na comunicação com o backend.\n" +
+        "Confirme se server.py está ligado.\n" + error.message;
+      resultInfo.textContent = "Erro de conexão.";
+    } finally {
+      button.disabled = false;
+      button.textContent = ({
+        dns: "Consultar DNS",
+        headers: "Verificar cabeçalhos",
+        tls: "Verificar TLS",
+        hash: "Calcular SHA-256"
+      })[api];
     }
   });
+});
 
-  function exportJSON() {
-    const report = {
-      application: "ANON CYBERSEC PRO",
-      version: "2.0.0",
-      exportedAt: new Date().toISOString(),
-      note: "Registro de interface; não representa resultados técnicos de varredura.",
-      activities: data
-    };
-
-    const blob = new Blob(
-      [JSON.stringify(report, null, 2)],
-      { type: "application/json" }
-    );
-
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-
-    link.href = url;
-    link.download = "anon-cybersec-relatorio.json";
-
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-
-    log("[OK] JSON exportado.");
-    toast("Relatório JSON exportado.");
-  }
-
-  $("#export").addEventListener("click", exportJSON);
-  $("#exportQuick").addEventListener("click", exportJSON);
-
-  // Cria uma cópia dos cartões para a página de ferramentas.
-  $("#toolsCopy").innerHTML = $("#toolGrid").innerHTML;
-
-  $("#search").addEventListener("input", event => {
-    const query = event.target.value.toLowerCase().trim();
-
-    $$("#toolsCopy .tool").forEach(card => {
-      const searchable = (
-        (card.dataset.search || "") + " " + card.textContent
-      ).toLowerCase();
-
-      card.hidden = !searchable.includes(query);
-    });
-  });
-
-  $("#clearSearch").addEventListener("click", () => {
-    $("#search").value = "";
-
-    $$("#toolsCopy .tool").forEach(card => {
-      card.hidden = false;
-    });
-
-    $("#search").focus();
-  });
-
-  function updateClock() {
-    $("#clock").textContent =
-      new Date().toLocaleTimeString("pt-BR");
-  }
-
-  updateClock();
-  setInterval(updateClock, 1000);
-})();
+checkServer();
 </script>
 </body>
 </html>
