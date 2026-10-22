@@ -2,21 +2,22 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#080d16">
-  <meta name="description" content="ANON CYBERSEC PRO — central de ferramentas e recursos de cibersegurança defensiva.">
-  <title>ANON CYBERSEC PRO | Central de Segurança</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07111f">
+  <meta name="description" content="ANON CYBERSEC PRO — painel de estudos de cibersegurança, redes e desenvolvimento web.">
+  <title>ANON CYBERSEC PRO</title>
 
   <style>
     :root {
       color-scheme: dark;
-      --bg: #080d16;
-      --panel: #101b2a;
-      --line: #263b52;
-      --text: #eaf4ff;
-      --muted: #9aadc3;
-      --cyan: #42dcff;
-      --green: #50e3a4;
+      --bg: #06101d;
+      --panel: #0c1a2b;
+      --panel-light: #10243a;
+      --cyan: #54e7ff;
+      --green: #70f5bb;
+      --text: #eff8ff;
+      --muted: #9cb1c6;
+      --border: rgba(84, 231, 255, .19);
     }
 
     * { box-sizing: border-box; }
@@ -26,37 +27,33 @@
     body {
       margin: 0;
       min-height: 100vh;
-      background: radial-gradient(ellipse at 50% -10%, #12384f, var(--bg) 62%);
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
       color: var(--text);
-      font: 15px/1.6 system-ui, Segoe UI, Arial, sans-serif;
+      background:
+        radial-gradient(ellipse at 15% 0%, rgba(0, 174, 255, .14), transparent 35rem),
+        radial-gradient(ellipse at 95% 30%, rgba(0, 255, 170, .06), transparent 30rem),
+        var(--bg);
     }
 
-    a { color: inherit; text-decoration: none; }
+    a { color: inherit; }
+
     button, input { font: inherit; }
-    button, a { -webkit-tap-highlight-color: transparent; }
 
-    button:focus-visible,
-    a:focus-visible,
-    input:focus-visible {
-      outline: 2px solid var(--cyan);
-      outline-offset: 3px;
-    }
-
-    .wrap {
-      width: min(1120px, calc(100% - 36px));
-      margin-inline: auto;
+    .container {
+      width: min(1160px, calc(100% - 36px));
+      margin: auto;
     }
 
     header {
       position: sticky;
       top: 0;
       z-index: 10;
-      border-bottom: 1px solid var(--line);
-      background: #080e17ed;
-      backdrop-filter: blur(14px);
+      background: rgba(6, 16, 29, .91);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
     }
 
-    .nav {
+    .navbar {
       min-height: 76px;
       display: flex;
       align-items: center;
@@ -68,174 +65,170 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      font-weight: 850;
-      letter-spacing: .5px;
+      text-decoration: none;
+      font-weight: 900;
+      letter-spacing: .07em;
     }
 
     .logo {
       width: 44px;
       height: 44px;
-      border: 1px solid #2b6077;
-      background: #123246;
-      border-radius: 13px;
       display: grid;
       place-items: center;
+      border: 1px solid var(--cyan);
+      border-radius: 13px;
       color: var(--cyan);
-      font-size: 25px;
-      box-shadow: 0 0 24px #42dcff18;
+      box-shadow: 0 0 24px rgba(84, 231, 255, .12);
+      font-size: 22px;
     }
-
-    .brand span, .accent { color: var(--cyan); }
 
     .brand small {
       display: block;
+      margin-top: 4px;
       color: var(--muted);
-      font-size: 9px;
-      letter-spacing: 1.8px;
+      font-size: 10px;
+      letter-spacing: .18em;
     }
 
-    .nav-links {
+    nav {
       display: flex;
-      align-items: center;
-      gap: 20px;
+      flex-wrap: wrap;
+      gap: 22px;
+    }
+
+    nav a {
       color: var(--muted);
-      font-size: 13px;
+      font-size: 14px;
+      text-decoration: none;
+      transition: color .2s;
     }
 
-    .nav-links a:hover { color: var(--cyan); }
-
-    .status {
-      color: var(--green);
-      font-size: 12px;
-      white-space: nowrap;
-    }
+    nav a:hover { color: var(--cyan); }
 
     .hero {
+      padding: 78px 0 48px;
       display: grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap: 42px;
+      grid-template-columns: 1.2fr .8fr;
       align-items: center;
-      padding: 72px 0 48px;
+      gap: 34px;
     }
 
     .eyebrow {
-      color: var(--cyan);
-      font-size: 10px;
-      font-weight: 850;
-      letter-spacing: 2px;
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .17em;
       text-transform: uppercase;
     }
 
     h1 {
-      margin: 14px 0;
-      font-size: clamp(36px, 5.5vw, 62px);
+      margin: 17px 0;
+      font-size: clamp(38px, 6vw, 68px);
       line-height: 1.04;
-      letter-spacing: -2px;
+      letter-spacing: -.045em;
     }
 
-    h2 { margin: 0 0 8px; font-size: 22px; }
-    h3 { margin: 0 0 8px; font-size: 16px; }
-    p { margin: 10px 0; }
-    .muted { color: var(--muted); }
+    h1 span { color: var(--cyan); }
 
-    .hero-copy { max-width: 650px; }
-
-    .hero-copy > p {
-      max-width: 600px;
-      font-size: 16px;
+    .lead {
+      max-width: 660px;
       color: var(--muted);
+      font-size: 17px;
+      line-height: 1.8;
     }
 
     .actions {
       display: flex;
-      gap: 12px;
       flex-wrap: wrap;
-      margin-top: 25px;
+      gap: 12px;
+      margin-top: 27px;
     }
 
-    .btn {
+    .button {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 11px 16px;
+      padding: 12px 17px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--panel);
+      color: var(--text);
+      text-decoration: none;
+      font-size: 14px;
       font-weight: 800;
-      font-size: 13px;
       cursor: pointer;
-      transition: transform .15s ease, border-color .15s ease;
+      transition: .2s;
     }
 
-    .btn:hover {
+    .button:hover {
       transform: translateY(-2px);
       border-color: var(--cyan);
     }
 
-    .btn-primary {
-      background: linear-gradient(100deg, var(--cyan), #83baff);
-      color: #06111b;
-      border: 0;
+    .button.primary {
+      background: var(--cyan);
+      color: #04111b;
+      border-color: var(--cyan);
     }
 
-    .btn-secondary {
-      background: #142338;
-      color: var(--text);
-    }
-
-    .hero-card {
-      border: 1px solid var(--line);
+    .panel, .card {
+      background: linear-gradient(145deg, rgba(16, 36, 58, .96), rgba(9, 23, 40, .96));
+      border: 1px solid var(--border);
       border-radius: 20px;
-      padding: 23px;
-      background: linear-gradient(145deg, #101e30, #0b1420);
-      box-shadow: 0 22px 65px #0005;
+      box-shadow: 0 18px 48px rgba(0, 0, 0, .17);
     }
 
-    .card-head {
+    .panel { padding: 24px; }
+
+    .panel-top {
       display: flex;
       justify-content: space-between;
-      gap: 12px;
       align-items: center;
-      padding-bottom: 15px;
-      border-bottom: 1px solid var(--line);
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      border: 1px solid #285e48;
+    .status {
+      padding: 6px 10px;
+      border: 1px solid rgba(112, 245, 187, .3);
       border-radius: 99px;
-      padding: 5px 9px;
       color: var(--green);
-      font-size: 10px;
+      font-size: 11px;
+      font-weight: 800;
     }
 
-    .dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: currentColor;
+    .terminal {
+      margin-top: 22px;
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, .07);
+      border-radius: 13px;
+      background: #040b13;
+      color: #b8cbdc;
+      font: 13px/2 ui-monospace, Consolas, monospace;
+      overflow-wrap: anywhere;
     }
 
-    .metric-grid {
+    .terminal .green { color: var(--green); }
+    .terminal .cyan { color: var(--cyan); }
+
+    .metrics {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
       margin-top: 15px;
     }
 
     .metric {
-      border: 1px solid var(--line);
-      background: #080f19;
+      padding: 13px;
+      border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 15px;
     }
 
     .metric strong {
       display: block;
       color: var(--cyan);
-      font-size: 21px;
+      font-size: 20px;
     }
 
     .metric span {
@@ -243,384 +236,433 @@
       font-size: 11px;
     }
 
-    .section { padding: 35px 0; }
+    section { padding: 34px 0; }
 
-    .section-head {
+    .section-heading {
       display: flex;
-      justify-content: space-between;
       align-items: end;
-      gap: 18px;
-      margin-bottom: 20px;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 22px;
     }
 
-    .section-head p {
-      max-width: 580px;
-      color: var(--muted);
-      margin-bottom: 0;
+    h2 {
+      margin: 0;
+      font-size: clamp(25px, 4vw, 35px);
+      letter-spacing: -.025em;
     }
+
+    .section-heading p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .search {
+      width: min(100%, 300px);
+      padding: 13px 15px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--panel);
+      color: var(--text);
+      outline: none;
+    }
+
+    .search:focus { border-color: var(--cyan); }
 
     .grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 15px;
+      gap: 16px;
     }
 
-    .tool-card {
-      min-height: 190px;
-      padding: 20px;
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      background: linear-gradient(145deg, var(--panel), #0b1420);
-      transition: transform .18s ease, border-color .18s ease;
+    .card {
+      padding: 21px;
+      transition: transform .2s, border-color .2s;
     }
 
-    .tool-card:hover {
+    .card:hover {
       transform: translateY(-3px);
-      border-color: #36728a;
+      border-color: rgba(84, 231, 255, .5);
     }
 
-    .tool-icon {
-      width: 42px;
-      height: 42px;
+    .card-icon {
+      width: 44px;
+      height: 44px;
       display: grid;
       place-items: center;
-      border-radius: 12px;
-      background: #123246;
-      color: var(--cyan);
-      font-size: 20px;
-      margin-bottom: 15px;
-    }
-
-    .tool-card p {
-      color: var(--muted);
-      font-size: 13px;
-      min-height: 42px;
-    }
-
-    .card-link {
-      color: var(--cyan);
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    .notice {
-      border: 1px solid #665128;
-      background: #211b10;
-      color: #ead49b;
+      border: 1px solid var(--border);
       border-radius: 13px;
-      padding: 15px 17px;
-      font-size: 12px;
+      background: rgba(84, 231, 255, .08);
+      font-size: 22px;
+    }
+
+    .card h3 {
+      margin: 16px 0 9px;
+      font-size: 18px;
+    }
+
+    .card p {
+      min-height: 68px;
+      margin: 0 0 17px;
+      color: var(--muted);
+      font-size: 14px;
       line-height: 1.7;
     }
 
-    .search-row {
-      display: flex;
-      gap: 10px;
-      margin: 0 0 18px;
+    .card a {
+      color: var(--cyan);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 800;
     }
 
-    .search-row input {
-      flex: 1;
-      min-width: 0;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 12px 14px;
-      background: #080f19;
-      color: var(--text);
+    .card a:hover { text-decoration: underline; }
+
+    .notice {
+      display: flex;
+      gap: 14px;
+      padding: 20px;
+      border: 1px solid rgba(112, 245, 187, .22);
+      border-radius: 16px;
+      background: rgba(112, 245, 187, .045);
+      color: var(--muted);
+      line-height: 1.8;
     }
+
+    .notice strong { color: var(--green); }
 
     .empty {
       display: none;
+      padding: 20px 0;
       color: var(--muted);
-      padding: 18px 0;
     }
 
     footer {
-      margin-top: 35px;
-      border-top: 1px solid var(--line);
-      color: #71859d;
-      font-size: 11px;
-      padding: 25px 0;
+      margin-top: 42px;
+      padding: 27px 0;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 13px;
     }
 
     .footer-inner {
       display: flex;
+      flex-wrap: wrap;
       justify-content: space-between;
       gap: 12px;
-      flex-wrap: wrap;
     }
 
-    @media (max-width: 800px) {
-      .hero {
-        grid-template-columns: 1fr;
-        gap: 25px;
-        padding-top: 45px;
+    #backTop {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 8;
+      display: none;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, .4);
+    }
+
+    [hidden] { display: none !important; }
+
+    @media (max-width: 850px) {
+      .hero { grid-template-columns: 1fr; padding-top: 52px; }
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 580px) {
+      .navbar {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 14px 0;
       }
 
-      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .nav-links { gap: 12px; }
+      nav { gap: 14px; }
+      .hero { padding-top: 38px; }
+      .grid { grid-template-columns: 1fr; }
+      .section-heading { align-items: stretch; flex-direction: column; }
+      .search { width: 100%; }
+      .metrics { grid-template-columns: 1fr; }
+      .card p { min-height: auto; }
     }
 
-    @media (max-width: 560px) {
-      .wrap { width: min(100% - 26px, 1120px); }
-      .nav { min-height: 68px; }
-      .nav-links { display: none; }
-      .status { font-size: 10px; }
-      .hero { padding: 35px 0 25px; }
-      h1 { letter-spacing: -1px; }
-      .grid, .metric-grid { grid-template-columns: 1fr; }
-      .section-head { align-items: start; flex-direction: column; }
-      .tool-card { min-height: 0; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+      }
     }
   </style>
 </head>
 
 <body>
   <header>
-    <div class="wrap nav">
+    <div class="container navbar">
       <a class="brand" href="#inicio" aria-label="ANON CYBERSEC PRO - início">
-        <div class="logo">⬡</div>
-        <div>
-          ANON <span>CYBERSEC PRO</span>
-          <small>SECURITY CENTER</small>
-        </div>
+        <span class="logo">A</span>
+        <span>
+          ANON CYBERSEC PRO
+          <small>SECURITY • NETWORKS • LEARNING</small>
+        </span>
       </a>
 
-      <nav class="nav-links" aria-label="Navegação principal">
+      <nav aria-label="Navegação principal">
+        <a href="#inicio">Início</a>
         <a href="#ferramentas">Ferramentas</a>
-        <a href="#recursos">Recursos</a>
-        <a href="#sobre">Sobre</a>
+        <a href="#recursos">Aprender</a>
+        <a href="#status">Status</a>
+        <a href="#responsabilidade">Uso responsável</a>
       </nav>
-
-      <div class="status">● CENTRAL ATIVA</div>
     </div>
   </header>
 
-  <main class="wrap" id="inicio">
+  <main class="container" id="inicio">
     <section class="hero">
-      <div class="hero-copy">
-        <div class="eyebrow">Security operations · Central de recursos</div>
-
-        <h1>Seu centro de <span class="accent">cibersegurança.</span></h1>
-
-        <p>
-          Um painel organizado para acessar recursos de segurança digital,
-          aprender boas práticas e acompanhar suas atividades defensivas.
-          Sem cadastro ou tela de login.
+      <div>
+        <div class="eyebrow">● Central de conhecimento digital</div>
+        <h1>Explore a segurança.<br><span>Construa com responsabilidade.</span></h1>
+        <p class="lead">
+          Um painel moderno para estudar cibersegurança, redes, desenvolvimento
+          web e defesa digital. Esta versão é estática, não exige login e não
+          depende de uma API para abrir.
         </p>
 
         <div class="actions">
-          <a class="btn btn-primary" href="#ferramentas">
-            Explorar ferramentas <span aria-hidden="true">→</span>
-          </a>
-          <a class="btn btn-secondary" href="#recursos">Ver recursos</a>
+          <a class="button primary" href="#ferramentas">Explorar ferramentas ↗</a>
+          <a class="button" href="#recursos">Começar a aprender</a>
         </div>
       </div>
 
-      <aside class="hero-card" aria-label="Resumo da central">
-        <div class="card-head">
-          <div>
-            <div class="eyebrow">SYSTEM OVERVIEW</div>
-            <h2 style="margin-top:5px">Central de segurança</h2>
-          </div>
-          <span class="pill"><span class="dot"></span> Interface pronta</span>
+      <aside class="panel" aria-label="Estado do painel">
+        <div class="panel-top">
+          <strong>ANON / DASHBOARD</strong>
+          <span class="status">● INTERFACE ATIVA</span>
         </div>
 
-        <p class="muted" style="font-size:13px">
-          Resumo do estado desta página. Não representa uma varredura real do dispositivo.
-        </p>
+        <div class="terminal" aria-label="Resumo técnico">
+          <div><span class="green">anon@cybersec</span>:~$ status</div>
+          <div class="cyan">Interface carregada.</div>
+          <div>Modo: <span class="cyan">site estático</span></div>
+          <div>Login: <span class="cyan">não necessário</span></div>
+          <div>API: <span class="cyan">não utilizada</span></div>
+          <div>Finalidade: estudo e defesa digital</div>
+          <div><span class="green">anon@cybersec</span>:~$ <span class="cyan">_</span></div>
+        </div>
 
-        <div class="metric-grid">
-          <div class="metric"><strong>01</strong><span>Painel público</span></div>
-          <div class="metric"><strong>HTTPS</strong><span>Recomendado ao publicar</span></div>
-          <div class="metric"><strong>0</strong><span>Contas exigidas</span></div>
-          <div class="metric"><strong>DEF</strong><span>Foco defensivo</span></div>
+        <div class="metrics">
+          <div class="metric"><strong>01</strong><span>Arquivo HTML</span></div>
+          <div class="metric"><strong>0</strong><span>APIs necessárias</span></div>
+          <div class="metric"><strong>100%</strong><span>Responsivo</span></div>
         </div>
       </aside>
     </section>
 
-    <section class="section" id="ferramentas">
-      <div class="section-head">
+    <section id="status">
+      <div class="section-heading">
         <div>
-          <div class="eyebrow">Workspace</div>
-          <h2>Ferramentas e atalhos</h2>
-          <p>
-            Pesquise os cartões e abra os recursos disponíveis. Os atalhos externos
-            são referências; eles não executam testes automaticamente.
-          </p>
+          <h2>Visão geral</h2>
+          <p>Recursos principais deste painel.</p>
         </div>
       </div>
 
-      <div class="search-row">
-        <input id="toolSearch" type="search" placeholder="Pesquisar ferramentas..." aria-label="Pesquisar ferramentas">
-        <button class="btn btn-secondary" id="clearSearch" type="button">Limpar</button>
+      <div class="grid">
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">⚡</div>
+          <h3>Rápido e leve</h3>
+          <p>HTML, CSS e JavaScript no próprio arquivo, sem frameworks obrigatórios.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">🔒</div>
+          <h3>Sem tela de login</h3>
+          <p>Não solicita senhas nem envia formulários para um servidor.</p>
+        </article>
+
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">📱</div>
+          <h3>Design responsivo</h3>
+          <p>Layout adaptável a computadores, tablets e celulares.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="ferramentas">
+      <div class="section-heading">
+        <div>
+          <h2>Central de ferramentas</h2>
+          <p>Pesquise e abra documentação e serviços conhecidos.</p>
+        </div>
+
+        <input
+          class="search"
+          id="search"
+          type="search"
+          placeholder="Pesquisar ferramentas..."
+          aria-label="Pesquisar ferramentas"
+        >
       </div>
 
       <div class="grid" id="toolGrid">
-        <article class="tool-card" data-search="aprendizado documentação segurança">
-          <div class="tool-icon" aria-hidden="true">⌘</div>
-          <h3>Aprender segurança</h3>
-          <p>Estude conceitos de cibersegurança, redes e proteção de sistemas.</p>
-          <a class="card-link" href="https://owasp.org/www-project-top-ten/" target="_blank" rel="noopener noreferrer">Abrir OWASP ↗</a>
+        <article class="card" data-search="owasp segurança aplicações web vulnerabilidades">
+          <div class="card-icon" aria-hidden="true">🛡️</div>
+          <h3>OWASP</h3>
+          <p>Guias e projetos para melhorar a segurança de aplicações web.</p>
+          <a href="https://owasp.org/" target="_blank" rel="noopener noreferrer">Abrir OWASP ↗</a>
         </article>
 
-        <article class="tool-card" data-search="senhas senha auditoria segurança">
-          <div class="tool-icon" aria-hidden="true">⛨</div>
-          <h3>Boas práticas de senhas</h3>
-          <p>Aprenda a criar senhas únicas e proteger suas contas pessoais.</p>
-          <a class="card-link" href="https://haveibeenpwned.com/" target="_blank" rel="noopener noreferrer">Verificar e-mail ↗</a>
+        <article class="card" data-search="have i been pwned vazamento email conta">
+          <div class="card-icon" aria-hidden="true">🔎</div>
+          <h3>Have I Been Pwned</h3>
+          <p>Consulte se um e-mail aparece em incidentes de dados conhecidos.</p>
+          <a href="https://haveibeenpwned.com/" target="_blank" rel="noopener noreferrer">Abrir serviço ↗</a>
         </article>
 
-        <article class="tool-card" data-search="cabeçalhos http web segurança">
-          <div class="tool-icon" aria-hidden="true">⌁</div>
-          <h3>Segurança web</h3>
-          <p>Consulte orientações para proteger sites e aplicações web.</p>
-          <a class="card-link" href="https://developer.mozilla.org/docs/Web/HTTP" target="_blank" rel="noopener noreferrer">Documentação HTTP ↗</a>
+        <article class="card" data-search="mdn html css javascript desenvolvimento web">
+          <div class="card-icon" aria-hidden="true">💻</div>
+          <h3>MDN Web Docs</h3>
+          <p>Documentação para aprender HTML, CSS, JavaScript e tecnologias web.</p>
+          <a href="https://developer.mozilla.org/pt-BR/" target="_blank" rel="noopener noreferrer">Estudar documentação ↗</a>
         </article>
 
-        <article class="tool-card" data-search="linux kali terminal documentação">
-          <div class="tool-icon" aria-hidden="true">▣</div>
-          <h3>Linux e terminal</h3>
-          <p>Consulte documentação oficial para administração e aprendizado em Linux.</p>
-          <a class="card-link" href="https://www.kali.org/docs/" target="_blank" rel="noopener noreferrer">Documentação Kali ↗</a>
+        <article class="card" data-search="kali linux documentação sistema laboratório">
+          <div class="card-icon" aria-hidden="true">🐉</div>
+          <h3>Kali Linux Docs</h3>
+          <p>Documentação oficial para configurar e aprender sobre Kali Linux.</p>
+          <a href="https://www.kali.org/docs/" target="_blank" rel="noopener noreferrer">Abrir documentação ↗</a>
         </article>
 
-        <article class="tool-card" data-search="privacidade conta proteção digital">
-          <div class="tool-icon" aria-hidden="true">◈</div>
-          <h3>Privacidade digital</h3>
-          <p>Confira recomendações para melhorar a privacidade e segurança online.</p>
-          <a class="card-link" href="https://www.cisa.gov/secure-our-world" target="_blank" rel="noopener noreferrer">Guia de segurança ↗</a>
+        <article class="card" data-search="cisa segurança cibernética defesa proteção">
+          <div class="card-icon" aria-hidden="true">🌐</div>
+          <h3>CISA</h3>
+          <p>Orientações de segurança cibernética, prevenção e resposta a incidentes.</p>
+          <a href="https://www.cisa.gov/secure-our-world" target="_blank" rel="noopener noreferrer">Ver boas práticas ↗</a>
         </article>
 
-        <article class="tool-card" data-search="relatórios notas documentação">
-          <div class="tool-icon" aria-hidden="true">▤</div>
-          <h3>Notas e relatórios</h3>
-          <p>Abra um bloco local simples para organizar anotações nesta sessão.</p>
-          <button class="card-link" id="openNotes" type="button" style="border:0;background:none;padding:0">
-            Abrir bloco de notas →
-          </button>
+        <article class="card" data-search="http status códigos cabeçalhos rede">
+          <div class="card-icon" aria-hidden="true">📡</div>
+          <h3>Referência HTTP</h3>
+          <p>Consulte métodos, cabeçalhos e códigos de status HTTP.</p>
+          <a href="https://developer.mozilla.org/pt-BR/docs/Web/HTTP" target="_blank" rel="noopener noreferrer">Consultar HTTP ↗</a>
+        </article>
+
+        <article class="card" data-search="portswigger web security academy treinamento laboratório">
+          <div class="card-icon" aria-hidden="true">🎓</div>
+          <h3>Web Security Academy</h3>
+          <p>Laboratórios educacionais para aprender segurança de aplicações web.</p>
+          <a href="https://portswigger.net/web-security" target="_blank" rel="noopener noreferrer">Abrir laboratórios ↗</a>
+        </article>
+
+        <article class="card" data-search="owasp juice shop laboratório prática web">
+          <div class="card-icon" aria-hidden="true">🧪</div>
+          <h3>OWASP Juice Shop</h3>
+          <p>Aplicação de treinamento criada para praticar segurança em laboratório.</p>
+          <a href="https://owasp.org/www-project-juice-shop/" target="_blank" rel="noopener noreferrer">Conhecer projeto ↗</a>
+        </article>
+
+        <article class="card" data-search="git github versionamento código documentação">
+          <div class="card-icon" aria-hidden="true">🗂️</div>
+          <h3>GitHub Docs</h3>
+          <p>Aprenda a organizar projetos, versionar código e publicar páginas.</p>
+          <a href="https://docs.github.com/pt" target="_blank" rel="noopener noreferrer">Abrir documentação ↗</a>
         </article>
       </div>
 
-      <p class="empty" id="emptyState">Nenhuma ferramenta encontrada para essa pesquisa.</p>
+      <p id="empty" class="empty" role="status">Nenhuma ferramenta encontrada. Tente outra pesquisa.</p>
     </section>
 
-    <section class="section" id="recursos">
-      <div class="section-head">
+    <section id="recursos">
+      <div class="section-heading">
         <div>
-          <div class="eyebrow">Recursos</div>
-          <h2>Atalhos úteis</h2>
-          <p>Referências para desenvolver habilidades de segurança de forma responsável.</p>
+          <h2>Trilha de aprendizagem</h2>
+          <p>Construa sua base antes de avançar para assuntos mais complexos.</p>
         </div>
       </div>
 
-      <div class="notice">
-        Use ferramentas apenas em dispositivos, contas, redes e aplicações que sejam seus
-        ou para os quais você tenha autorização explícita. Este painel é uma interface estática:
-        não realiza varreduras, não consulta sistemas privados e não armazena contas.
+      <div class="grid">
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">📘</div>
+          <h3>1. Redes e internet</h3>
+          <p>Estude IP, DNS, portas, HTTP/HTTPS e como os dispositivos se comunicam.</p>
+          <a href="https://developer.mozilla.org/pt-BR/docs/Web/HTTP/Overview" target="_blank" rel="noopener noreferrer">Começar a estudar ↗</a>
+        </article>
+
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">🔐</div>
+          <h3>2. Proteção de contas</h3>
+          <p>Use senhas únicas, autenticação multifator e recuperação segura de acesso.</p>
+          <a href="https://www.cisa.gov/secure-our-world" target="_blank" rel="noopener noreferrer">Ver recomendações ↗</a>
+        </article>
+
+        <article class="card">
+          <div class="card-icon" aria-hidden="true">🧰</div>
+          <h3>3. Desenvolvimento web</h3>
+          <p>Aprenda HTML, CSS e JavaScript para criar e manter seus próprios projetos.</p>
+          <a href="https://developer.mozilla.org/pt-BR/docs/Learn" target="_blank" rel="noopener noreferrer">Abrir tutoriais ↗</a>
+        </article>
       </div>
     </section>
 
-    <section class="section" id="sobre">
-      <div class="section-head">
+    <section id="responsabilidade">
+      <div class="notice">
+        <div aria-hidden="true">⚠️</div>
         <div>
-          <div class="eyebrow">Sobre o projeto</div>
-          <h2>ANON CYBERSEC PRO</h2>
-          <p>Interface pública sem login, pronta para hospedar como página estática no GitHub Pages.</p>
+          <strong>Segurança e uso responsável:</strong>
+          use ferramentas e conhecimentos somente em sistemas seus ou para os quais
+          você tenha autorização explícita. Este painel é informativo: ele não realiza
+          varreduras, ataques, testes automáticos nem consultas a uma API.
         </div>
       </div>
     </section>
   </main>
 
+  <button id="backTop" class="button" type="button" aria-label="Voltar ao topo">↑ Topo</button>
+
   <footer>
-    <div class="wrap footer-inner">
-      <span>ANON CYBERSEC PRO · Central de Segurança</span>
-      <span id="year"></span>
+    <div class="container footer-inner">
+      <span>© <span id="year"></span> ANON CYBERSEC PRO</span>
+      <span>Estudo • Desenvolvimento • Defesa digital</span>
     </div>
   </footer>
 
-  <dialog id="notesDialog" style="width:min(600px,calc(100% - 28px));border:1px solid #263b52;border-radius:16px;background:#101b2a;color:#eaf4ff;padding:22px">
-    <form method="dialog">
-      <div class="card-head">
-        <div>
-          <div class="eyebrow">Anotações locais</div>
-          <h2 style="margin-top:6px">Bloco de notas</h2>
-        </div>
-        <button class="btn btn-secondary" aria-label="Fechar bloco de notas">Fechar</button>
-      </div>
-
-      <p class="muted" style="font-size:12px">
-        As notas existem apenas enquanto esta janela estiver aberta; copie o conteúdo antes de fechar.
-      </p>
-
-      <textarea id="notesText" rows="8" placeholder="Escreva suas notas aqui..." style="width:100%;resize:vertical;background:#080f19;color:#eaf4ff;border:1px solid #263b52;border-radius:10px;padding:12px;font:inherit"></textarea>
-
-      <div class="actions">
-        <button class="btn btn-primary" id="copyNotes" type="button">Copiar notas</button>
-        <button class="btn btn-secondary" type="submit">Concluir</button>
-      </div>
-
-      <p class="muted" id="notesStatus" aria-live="polite" style="font-size:12px"></p>
-    </form>
-  </dialog>
-
   <script>
-    const searchInput = document.getElementById("toolSearch");
-    const cards = [...document.querySelectorAll(".tool-card")];
-    const emptyState = document.getElementById("emptyState");
+    "use strict";
 
-    function filterTools() {
-      const term = searchInput.value.trim().toLocaleLowerCase("pt-BR");
-      let visible = 0;
+    // Esta versão é estática: não faz chamadas à API do Render.
+    const year = document.getElementById("year");
+    const search = document.getElementById("search");
+    const cards = Array.from(document.querySelectorAll("#toolGrid .card"));
+    const empty = document.getElementById("empty");
+    const backTop = document.getElementById("backTop");
 
-      cards.forEach(card => {
-        const text = (
+    year.textContent = new Date().getFullYear();
+
+    search.addEventListener("input", () => {
+      const query = search.value.trim().toLocaleLowerCase("pt-BR");
+      let visibleCount = 0;
+
+      cards.forEach((card) => {
+        const content = (
           card.innerText + " " + (card.dataset.search || "")
         ).toLocaleLowerCase("pt-BR");
 
-        const match = text.includes(term);
-        card.hidden = !match;
+        const matches = content.includes(query);
+        card.hidden = !matches;
 
-        if (match) visible++;
+        if (matches) visibleCount++;
       });
 
-      emptyState.style.display = visible ? "none" : "block";
+      empty.style.display = visibleCount === 0 ? "block" : "none";
+    });
+
+    function updateBackTop() {
+      backTop.style.display = window.scrollY > 400 ? "inline-flex" : "none";
     }
 
-    searchInput.addEventListener("input", filterTools);
+    window.addEventListener("scroll", updateBackTop, { passive: true });
 
-    document.getElementById("clearSearch").addEventListener("click", () => {
-      searchInput.value = "";
-      filterTools();
-      searchInput.focus();
+    backTop.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
-
-    const notesDialog = document.getElementById("notesDialog");
-
-    document.getElementById("openNotes").addEventListener("click", () => {
-      if (typeof notesDialog.showModal === "function") {
-        notesDialog.showModal();
-      } else {
-        alert("Seu navegador não suporta a janela de notas. Atualize o navegador.");
-      }
-    });
-
-    document.getElementById("copyNotes").addEventListener("click", async () => {
-      const text = document.getElementById("notesText").value;
-      const status = document.getElementById("notesStatus");
-
-      try {
-        await navigator.clipboard.writeText(text);
-        status.textContent = "Notas copiadas.";
-      } catch {
-        document.getElementById("notesText").focus();
-        document.getElementById("notesText").select();
-        status.textContent = "Não foi possível copiar automaticamente. Use Ctrl+C.";
-      }
-    });
-
-    document.getElementById("year").textContent =
-      "© " + new Date().getFullYear() + " · Segurança defensiva";
   </script>
 </body>
 </html>
